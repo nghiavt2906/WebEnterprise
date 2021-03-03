@@ -1,0 +1,14 @@
+.custom-alert {
+    width: 25rem; 
+    position: absolute; 
+    top: 0.5rem; 
+    right: 0.5rem; 
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-alert button {
+  margin: 0;
+}

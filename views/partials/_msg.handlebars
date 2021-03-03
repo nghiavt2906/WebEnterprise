@@ -1,0 +1,49 @@
+{{#if success_msg}}
+  <div class="alert alert-success background-success custom-alert">
+    <div>
+      <strong>Success!</strong> {{success_msg}}
+    </div>
+    <button type="button" class="close " data-dismiss="alert" aria-label="Close">
+        <i class="icofont icofont-close-line-circled text-white"></i>
+    </button>
+  </div>
+{{/if}}
+
+{{#if error_msg}}
+  <div class="alert alert-danger background-danger custom-alert">
+    <div>
+      <strong>Error!</strong> {{error_msg}}
+    </div>
+    <button type="button" class="close " data-dismiss="alert" aria-label="Close">
+        <i class="icofont icofont-close-line-circled text-white"></i>
+    </button>
+  </div>
+{{/if}}
+
+{{#if error}}
+  <div class="alert alert-danger background-danger custom-alert">
+    <div>
+      <strong>Error!</strong> {{error}}
+    </div>
+    <button type="button" class="close " data-dismiss="alert" aria-label="Close">
+        <i class="icofont icofont-close-line-circled text-white"></i>
+    </button>
+  </div>
+{{/if}}
+
+{{#if errors}}
+
+<div class="error-box d-flex flex-column align-items-end pr-2">
+    {{#each errors}}
+    <div class="alert alert-danger alert-dismissible fade show error_msg_auth" role="alert">
+        {{text}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {{else}}
+
+    {{/each}}
+</div>
+
+{{/if}}
