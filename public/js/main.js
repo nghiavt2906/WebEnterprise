@@ -1,8 +1,21 @@
+document.querySelector(".fixed-button").style.visibility = "hidden";
+
+let fileName = document.getElementById("fileName").value;
+
 WebViewer(
     {
-        initialDoc: 'docs/Frontsheet 2.docx',
+        path: '/',
+        initialDoc: `/docs/${fileName}`,
     },
     document.getElementById('viewer')
 ).then(instance => {
-    console.log(instance)
+    const { annotManager } = instance;
+    annotManager.setReadOnly(true);
+});
+
+let recommendContributions = document.getElementById('recommendContributions');
+if (window.innerWidth <= 770) recommendContributions.classList.add('order-12');
+window.addEventListener("resize", function (event) {
+    if (window.innerWidth <= 770) recommendContributions.classList.add('order-12');
+    else recommendContributions.classList.remove('order-12');
 });

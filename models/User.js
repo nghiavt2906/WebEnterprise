@@ -14,8 +14,16 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    ProfileId: {
-        type: Schema.ObjectId
+    role: {
+        type: String,
+        required: true,
+        enum: ['guest', 'student', 'marketing coordinator', 'marketing manager', 'admin'],
+        default: 'guest'
+    },
+    profileId: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: 'profile'
     }
 }, { timestamps: true })
 

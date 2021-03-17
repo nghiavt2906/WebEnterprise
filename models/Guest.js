@@ -1,7 +1,19 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const ProfileSchema = new Schema({
+const GuestSchema = new Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
     firstName: {
         type: String,
         required: true
@@ -10,27 +22,17 @@ const ProfileSchema = new Schema({
         type: String,
         required: true
     },
-    gender: {
+    Gender: {
         type: String,
         required: true,
         enum: ['male', 'female']
     },
     address: {
-        type: String,
-        required: true
-    },
-    phoneNumber: {
-        type: String,
-        required: true
-    },
-    description: {
         type: String
     },
-    facultyId: {
-        type: Schema.ObjectId,
-        required: true,
-        ref: 'faculty'
+    phoneNumber: {
+        type: String
     }
 }, { timestamps: true })
 
-module.exports = mongoose.model('profile', ProfileSchema)
+module.exports = mongoose.model('guest', GuestSchema)

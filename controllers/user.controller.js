@@ -1,38 +1,32 @@
 const _ = require('lodash')
 const bcrypt = require('bcrypt')
-const passport = require('passport')
 
+const Faculty = require('../models/Faculty')
 const User = require('../models/User')
 const Profile = require('../models/Profile')
 
-const getLogin = (req, res) => {
-    res.render('auth/login', {
-        layout: 'auth'
-    })
+const getUsers = async (req, res) => {
+    let users = await User.find()
+    let faculties = await Faculty.find()
+
+    for (const user of users) {
+        await user.populate('profileId').execPopulate()
+        await user.profileId.populate('facultyId').execPopulate()
+    }
+
+    res.render('user/viewUsers', { faculties, users, active: { accounts: true } })
 }
 
-const postLogin = (req, res, next) => {
-    passport.authenticate('local', {
-        successRedirect: '/',
-        failureRedirect: '/auth/login',
-        failureFlash: true
-    })(req, res, next)
-}
-
-const getSignup = (req, res) => {
-    res.render('auth/signUp', {
-        layout: 'auth'
-    })
-}
-
-const postSignup = async (req, res) => {
-    let userData = _.pick(req.body, ['username', 'email', 'password'])
+const postUser = async (req, res) => {
+    let userData = _.pick(req.body, ['username', 'email', 'password', 'role'])
     let profileData = _.pick(req.body, [
         'firstName',
         'lastName',
         'gender',
         'address',
-        'phoneNumber'
+        'phoneNumber',
+        'description',
+        'facultyId'
     ])
 
     let user = User(userData)
@@ -58,11 +52,11 @@ const postSignup = async (req, res) => {
     user.password = hashedPassword
 
     try {
-        await user.validate()
         await profile.validate()
-
         const profileResult = await profile.save()
+
         user.profileId = profileResult._id
+        await user.validate()
         await user.save()
     } catch (err) {
         console.error(err.message)
@@ -71,20 +65,12 @@ const postSignup = async (req, res) => {
         })
     }
 
-    req.flash('success_msg', 'registered successfully!')
-    res.redirect('/auth/login')
+    req.flash('success_msg', 'created a new user successfully!')
+    res.redirect('/user')
 }
 
-const getLogout = (req, res) => {
-    req.logOut()
-    req.flash('success_msg', 'You are logged out.')
-    res.redirect('/auth/login')
-}
 
 module.exports = {
-    getLogin,
-    getSignup,
-    getLogout,
-    postLogin,
-    postSignup
+    getUsers,
+    postUser
 }

@@ -1,0 +1,85 @@
+<div class="pcoded-content">
+  <!-- Page-header start -->
+  <div class="page-header">
+    <div class="page-block">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-header-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Mega Able</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <ul class="breadcrumb-title">
+            <li class="breadcrumb-item">
+              <a href="/"> <i class="fa fa-home"></i> </a>
+            </li>
+            <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <!-- Page-header end -->
+  <div class="container">
+    <h3>{{ contribution.title }}</h3>
+
+    <form action="/contribution/delete" method="post">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <input type="hidden" name="redirect" value="/contribution">
+        <input type="hidden" name="id" value={{ contribution._id }}>
+    </form>
+
+    <div class="row mt-3">
+      <div class="col-md-4 mt-3" id="recommendContributions">
+        <div class="card">
+          <div class="card-body">
+            <div class="card-title">
+              <h4>Students who viewed this also studied</h4>
+            </div>
+            <div class="row">
+              {{#each recommendContributions}}
+                <div class="col-sm-12 col-md-6">
+                  <div class="card">
+                    <a href="/contribution/details/{{_id}}">
+                      <img 
+                        class="card-img-top" 
+                        src="/thumbnails/{{thumbnailFileName}}" 
+                        onerror="this.src = 'https://lh3.googleusercontent.com/proxy/TkRSN4FMphRuEWtVa2o17N6w72fr8hMBNdDHAfcPsTyMtfuJ2bZeeKWgBvV20MYffP7LgqKBYiIlpu0zLS2kIdmrtbru6f8bJKmIWNXDMHaM'"
+                        alt="Card image cap"
+                      >
+                    </a>
+                    <div class="card-body">
+                      <h5 class="card-title">
+                        <a 
+                          href="/contribution/details/{{_id}}" 
+                          style="text-overflow: ellipsis;display: block;overflow: hidden;white-space: nowrap; margin-bottom: 0.5rem"
+                        >
+                          {{ title }}
+                        </a>
+                      </h5>
+                      <p 
+                        class="card-text"
+                        style="text-overflow: ellipsis;display: block;overflow: hidden;white-space: nowrap; margin-bottom: 0.5rem"
+                       >
+                        02/2021
+                       </p>
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8" style="height: 50rem">
+        <div class="card" style="height: 50rem">
+          <div id="viewer" style="height: 50rem"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <input type="hidden" id="fileName" name="fileName" value='{{contribution.fileName}}'>
+</div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Meta -->
     <meta charset="utf-8">
@@ -20,12 +21,16 @@
     <link rel="stylesheet" href="/assets/pages/waves/css/waves.min.css" type="text/css" media="all">
     <!-- themify icon -->
     <link rel="stylesheet" type="text/css" href="/assets/icon/themify-icons/themify-icons.css">
+    <!-- ico font -->
+    <link rel="stylesheet" type="text/css" href="/assets/icon/icofont/css/icofont.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" type="text/css" href="/assets/icon/font-awesome/css/font-awesome.min.css">
     <!-- scrollbar.css -->
     <link rel="stylesheet" type="text/css" href="/assets/css/jquery.mCustomScrollbar.css">
     <!-- am chart export.css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
+     rel="stylesheet"/>
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 
@@ -34,51 +39,61 @@
 </head>
 <body>
 
-    <div id="pcoded" class="pcoded iscollapsed" theme-layout="vertical" vertical-placement="left" vertical-layout="wide" pcoded-device-type="desktop" vertical-nav-type="expanded" vertical-effect="shrink" vnavigation-view="view1" nav-type="st2" fream-type="theme1" sidebar-img="false" sidebar-img-type="img1" layout-type="light">
-      <div class="pcoded-overlay-box"></div>
-      <div class="pcoded-container navbar-wrapper">
-        {{> _navbar}}
+  {{> _msg}}
 
-        <div class="pcoded-main-container" style="margin-top: 56px;">
-            <div class="pcoded-wrapper">
-                {{> _sidebar}}
-                {{{body}}}
-            </div>
-        </div>
-      </div>      
-    </div>
+  <div id="pcoded" class="pcoded iscollapsed" theme-layout="vertical" vertical-placement="left" vertical-layout="wide" pcoded-device-type="desktop" vertical-nav-type="expanded" vertical-effect="shrink" vnavigation-view="view1" nav-type="st2" fream-type="theme1" sidebar-img="false" sidebar-img-type="img1" layout-type="light">
+    <div class="pcoded-overlay-box"></div>
+    <div class="pcoded-container navbar-wrapper">
+      {{> _navbar}}
 
-    <!-- Required Jquery -->
-    <script type="text/javascript" src="/assets/js/jquery/jquery.min.js"></script>
-    <script type="text/javascript" src="/assets/js/jquery-ui/jquery-ui.min.js "></script>
-    <script type="text/javascript" src="/assets/js/popper.js/popper.min.js"></script>
-    <script type="text/javascript" src="/assets/js/bootstrap/js/bootstrap.min.js "></script>
-    <script type="text/javascript" src="/assets/pages/widget/excanvas.js "></script>
-    <!-- waves js -->
-    <script src="/assets/pages/waves/js/waves.min.js"></script>
-    <!-- jquery slimscroll js -->
-    <script type="text/javascript" src="/assets/js/jquery-slimscroll/jquery.slimscroll.js "></script>
-    <!-- modernizr js -->
-    <script type="text/javascript" src="/assets/js/modernizr/modernizr.js "></script>
-    <!-- slimscroll js -->
-    <script type="text/javascript" src="/assets/js/SmoothScroll.js"></script>
-    <script src="/assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
-    <!-- Chart js -->
-    <script type="text/javascript" src="/assets/js/chart.js/Chart.js"></script>
-    <!-- amchart js -->
-    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-    <script src="/assets/pages/widget/amchart/gauge.js"></script>
-    <script src="/assets/pages/widget/amchart/serial.js"></script>
-    <script src="/assets/pages/widget/amchart/light.js"></script>
-    <script src="/assets/pages/widget/amchart/pie.min.js"></script>
-    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-    <!-- menu js -->
-    <script src="/assets/js/pcoded.min.js"></script>
-    <script src="/assets/js/vertical-layout.min.js "></script>
-    <!-- custom js -->
-    <script type="text/javascript" src="/assets/pages/dashboard/custom-dashboard.js"></script>
-    <script type="text/javascript" src="/assets/js/script.js "></script>
-    <script src="/js/lib/webviewer.min.js"></script>
-    <script src="/js/main.js"></script>
+      <div class="pcoded-main-container" style="margin-top: 56px;">
+          <div class="pcoded-wrapper">
+              {{> _sidebar}}
+              {{{body}}}
+              <footer class="text-center" style="position: relative;bottom: 0">
+                &copy; 2021 University of Greenwich
+              </footer>
+          </div>
+      </div>
+    </div>      
+  </div>
+
+
+  <!-- Required Jquery -->
+  <script type="text/javascript" src="/assets/js/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/assets/js/jquery-ui/jquery-ui.min.js "></script>
+  <script type="text/javascript" src="/assets/js/popper.js/popper.min.js"></script>
+  <script type="text/javascript" src="/assets/js/bootstrap/js/bootstrap.min.js "></script>
+  <script type="text/javascript" src="/assets/pages/widget/excanvas.js "></script>
+  <!-- waves js -->
+  <script src="/assets/pages/waves/js/waves.min.js"></script>
+  <!-- jquery slimscroll js -->
+  <script type="text/javascript" src="/assets/js/jquery-slimscroll/jquery.slimscroll.js "></script>
+  <!-- modernizr js -->
+  <script type="text/javascript" src="/assets/js/modernizr/modernizr.js "></script>
+  <!-- slimscroll js -->
+  <script type="text/javascript" src="/assets/js/SmoothScroll.js"></script>
+  <script src="/assets/js/jquery.mCustomScrollbar.concat.min.js "></script>
+  <!-- Chart js -->
+  <script type="text/javascript" src="/assets/js/chart.js/Chart.js"></script>
+  <!-- amchart js -->
+  <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+  <script src="/assets/pages/widget/amchart/gauge.js"></script>
+  <script src="/assets/pages/widget/amchart/serial.js"></script>
+  <script src="/assets/pages/widget/amchart/light.js"></script>
+  <script src="/assets/pages/widget/amchart/pie.min.js"></script>
+  <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+  <!-- menu js -->
+  <script src="/assets/js/pcoded.min.js"></script>
+  <script src="/assets/js/vertical-layout.min.js "></script>
+  <!-- custom js -->
+  <script type="text/javascript" src="/assets/pages/dashboard/custom-dashboard.js"></script>
+  <script type="text/javascript" src="/assets/js/script.js "></script>
+  <script
+    type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.js"
+  ></script>
+  <script src="/js/lib/webviewer.min.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>

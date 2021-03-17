@@ -12,7 +12,7 @@
         <div class="col-md-4">
           <ul class="breadcrumb-title">
             <li class="breadcrumb-item">
-              <a href="index.html"> <i class="fa fa-home"></i> </a>
+              <a href="/"> <i class="fa fa-home"></i> </a>
             </li>
             <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
           </ul>
@@ -29,88 +29,41 @@
         <div class="page-body">
           <div class="row">
             <!-- task, page, download counter  start -->
-            <div class="col-xl-4 col-md-6">
-              <div class="card">
-                <div class="card-block">
-                  <div class="row align-items-center">
-                    <div class="col-12" style="text-align: center">
-                      <img
-                        src="./assets/images/3.png"
-                        alt=""
-                        style="width: 14rem"
-                      />
+            {{#if faculties}}
+              {{#each faculties}}
+                <div class="col-xl-4 col-md-6">
+                  <div class="card">
+                    <div class="card-block">
+                      <div class="row align-items-center">
+                        <div class="col-12" style="text-align: center">
+                          <img
+                            src="./assets/images/3.png"
+                            alt=""
+                            style="width: 14rem"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div class="card-footer text-muted bg-primary">
-                  <div
-                    class="text-white"
-                    style="text-align: center; font-size: 1rem"
-                  >
-                    <div class="text-white" style="text-align: center">
-                      <a
-                        href="documents.html"
-                        style="color: white; font-size: 1rem"
-                        >Information Technology</a
+                    <div class="card-footer text-muted bg-primary">
+                      <div
+                        class="text-white"
+                        style="text-align: center; font-size: 1rem"
                       >
+                        <div class="text-white" style="text-align: center">
+                          <a
+                            href="/contribution"
+                            style="color: white; font-size: 1rem"
+                            >{{ name }}</a
+                          >
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-md-6">
-              <div class="card">
-                <div class="card-block">
-                  <div class="row align-items-center">
-                    <div class="col-12" style="text-align: center">
-                      <img
-                        src="./assets/images/2.png"
-                        alt=""
-                        style="width: 14rem"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer text-muted bg-success">
-                  <div
-                    class="text-white"
-                    style="text-align: center; font-size: 1rem"
-                  >
-                    <div class="text-white" style="text-align: center">
-                      <a
-                        href="documents.html"
-                        style="color: white; font-size: 1rem"
-                        >Bussiness</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-md-6">
-              <div class="card">
-                <div class="card-block">
-                  <div class="row align-items-center">
-                    <div class="col-12" style="text-align: center">
-                      <img
-                        src="./assets/images/1.png"
-                        alt=""
-                        style="width: 14.5rem"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div class="card-footer text-muted bg-danger">
-                  <div class="text-white" style="text-align: center">
-                    <a
-                      href="documents.html"
-                      style="color: white; font-size: 1rem"
-                      >Graphic Design</a
-                    >
-                  </div>
-                </div>
-              </div>
-            </div>
+              {{/each}}
+            {{else}}
+              <b>No faculties found.</b>
+            {{/if}}
           </div>
         </div>
       </div>

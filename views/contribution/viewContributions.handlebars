@@ -1,0 +1,79 @@
+<div class="pcoded-content">
+  <!-- Page-header start -->
+  <div class="page-header">
+    <div class="page-block">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-header-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Mega Able</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <ul class="breadcrumb-title">
+            <li class="breadcrumb-item">
+              <a href="/"> <i class="fa fa-home"></i> </a>
+            </li>
+            <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <!-- Page-header end -->
+  <div class="container">
+    <div class="row">
+      {{#if contributions}}
+        {{#each contributions}}
+          <div class="col-sm-6 col-md-3">
+            <div class="card">
+              <a href="/contribution/details/{{_id}}">
+                <img 
+                  class="card-img-top" 
+                  src="/thumbnails/{{thumbnailFileName}}" 
+                  onerror="this.src = '/assets/images/default.jpg'"
+                  alt="Card image cap"
+                >
+              </a>
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a 
+                    href="/contribution/details/{{_id}}" 
+                    style="text-overflow: ellipsis;display: block;overflow: hidden;white-space: nowrap; margin-bottom: 0.5rem"
+                  >
+                    {{ title }}
+                  </a>
+                </h5>
+                <p class="card-text">02/2021</p>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      {{else}}
+        <b>No contributions found.</b>
+      {{/if}}
+    </div>
+  </div>
+  <nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+      {{#if isPreviousEnabled}}
+        <li class="page-item">
+          <a class="page-link" href="/contribution?page={{previousPageNum}}">Previous</a>
+        </li>
+      {{/if}}
+
+      {{#each numList}}
+        <li {{#if isActive}} class="page-item active" {{else}} class="page-item" {{/if}}>
+          <a class="page-link" {{#if isActive}} href="#" {{else}} href="/contribution?page={{number}}" {{/if}}>{{ number }}</a>
+        </li>
+      {{/each}}
+      
+      {{#if isNextEnabled}}
+        <li class="page-item">
+          <a class="page-link" href="/contribution?page={{nextPageNum}}">Next</a>
+        </li>
+      {{/if}}
+    </ul>
+  </nav>
+</div>

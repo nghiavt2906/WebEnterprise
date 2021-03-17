@@ -1,14 +1,37 @@
+.navbar {
+  z-index: 50 !important;
+}
+
 .custom-alert {
-    width: 25rem; 
-    position: absolute; 
-    top: 0.5rem; 
-    right: 0.5rem; 
-    z-index: 99;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  width: 25rem; 
+  position: absolute; 
+  top: 0.5rem; 
+  right: 0.5rem; 
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .custom-alert button {
   margin: 0;
+}
+
+.pcoded-content {
+  margin-bottom: 3rem;
+}
+
+.card:hover{
+  transform:scale(1.03);
+}
+
+.custom-tr:hover {
+  background-color: rgb(248, 248, 248);
+  cursor: pointer;
+}
+
+footer {
+  margin-top: 10rem;
+  padding: 2rem 0rem;
+  background-color: #f9fafb;
 }

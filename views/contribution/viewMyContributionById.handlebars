@@ -1,0 +1,102 @@
+<div class="pcoded-content">
+  <!-- Page-header start -->
+  <div class="page-header">
+    <div class="page-block">
+      <div class="row align-items-center">
+        <div class="col-md-8">
+          <div class="page-header-title">
+            <h5 class="m-b-10">Dashboard</h5>
+            <p class="m-b-0">Welcome to Mega Able</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <ul class="breadcrumb-title">
+            <li class="breadcrumb-item">
+              <a href="/"> <i class="fa fa-home"></i> </a>
+            </li>
+            <li class="breadcrumb-item"><a href="#!">Dashboard</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <!-- Page-header end -->
+  <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="card">
+                <div class="container">
+                    <div class="row grid-demo">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8" style="background: honeydew">
+                        <div class="page-wrapper" style="background: #ececec">
+                            <h3>{{ contribution.title }}</h3>
+                            <ul>
+                                <li>Status: <b style="color: {{statusColor}}">{{ status }}</b></li> 
+                                <li>Submission Date: {{ submissionDate }}</li> 
+                            </ul>
+                            <button class="btn btn-primary mt-2">
+                                <a href="/contribution/reupload?id={{ contribution._id }}" style="color: white">Reupload</a>
+                            </button>
+                            <div class="card mt-3" style="height: 45rem">
+                                <div id="viewer" style="height: 45rem"></div>
+                            </div>
+                            <input type="hidden" id="fileName" name="fileName" value='{{contribution.fileName}}'>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row grid-demo">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="page-wrapper">
+                        <div class="card">
+                            <div class="card-block table-border-style" style="padding: 5%">
+                            <div class="table-responsive">
+                                <table class="table">
+                                <div class="container mt-5">
+                                    <div class="d-flex justify-content-center row">
+                                    <div class="col-md-10">
+                                        <div class="d-flex flex-column comment-section">
+                                        <div class="bg-white"></div>
+                                        <div class="bg-light p-2">
+                                            <div class="d-flex flex-row align-items-start">
+                                            <textarea
+                                                class="form-control ml-1 shadow-none textarea"
+                                            ></textarea>
+                                            </div>
+                                            <div class="mt-2 text-right">
+                                            <button
+                                                class="btn btn-primary btn-sm shadow-none"
+                                                type="button"
+                                            >
+                                                Post comment</button
+                                            ><button
+                                                class="btn btn-outline-primary btn-sm ml-1 shadow-none"
+                                                type="button"
+                                            >
+                                                Cancel
+                                            </button>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </table>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+  </div>
+</div>

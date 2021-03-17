@@ -13,16 +13,20 @@ require('dotenv').config()
 require('./config/passport')(passport)
 
 const { checkAuthenticated } = require('./helpers/auth')
+const withCurrentUser = require('./middlewares/withCurrentUser')
 
 const port = process.env.PORT || 3000
 
 const app = express()
 
-const serveDocs = express.static(path.join(__dirname, 'media'))
+const serveMedia = express.static(path.join(__dirname, 'media'))
 
+const homeRouter = require(path.join(__dirname, 'routes/home'))
 const authRouter = require(path.join(__dirname, 'routes/auth'))
 const contributionRouter = require(path.join(__dirname, 'routes/contribution'))
 const profileRouter = require(path.join(__dirname, 'routes/profile'))
+const facultyRouter = require(path.join(__dirname, 'routes/faculty'))
+const userRouter = require(path.join(__dirname, 'routes/user'))
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -62,12 +66,14 @@ app.use((req, res, next) => {
 
 app.use('/auth', authRouter)
 app.use(checkAuthenticated)
-app.get('/', (req, res) => {
-    res.render('home')
-})
-app.get('/docs/*.docx', serveDocs)
+app.use(withCurrentUser)
+app.use('/', homeRouter)
+app.get('/docs/*.docx', serveMedia)
+app.get('/thumbnails/*.jpg', serveMedia)
 app.use('/contribution', contributionRouter)
 app.use('/profile', profileRouter)
+app.use('/faculty', facultyRouter)
+app.use('/user', userRouter)
 
 app.listen(port, err => {
     if (err) throw err
