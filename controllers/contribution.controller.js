@@ -2,10 +2,19 @@ const _ = require('lodash')
 const path = require('path')
 const fs = require('fs/promises')
 const moment = require('moment')
+const TimeAgo = require('javascript-time-ago')
+const en = require('javascript-time-ago/locale/en')
+const nodemailer = require('nodemailer')
 
 const { getThumbnail } = require('../helpers/thumbnailExtractor')
 const Contribution = require('../models/Contribution')
 const Profile = require('../models/Profile')
+const Semester = require('../models/Semester')
+const User = require('../models/User')
+
+TimeAgo.addDefaultLocale(en)
+// Create formatter (English).
+const timeAgo = new TimeAgo('en-US')
 
 const getContributions = async (req, res) => {
     let perPage = 8
@@ -113,6 +122,20 @@ const getMyContributionById = async (req, res) => {
 
     let submissionDate = moment(contribution.createdAt).format('DD-MM-YYYY')
 
+    await contribution.populate('userId').execPopulate()
+
+    for (let index = 0; index < contribution.contributionFeedbacks.length; index++) {
+        let feedback = contribution.contributionFeedbacks[index]
+        await contribution.populate(`contributionFeedbacks.${index}.userId`).execPopulate()
+
+        feedback.timeAgo = timeAgo.format(feedback.updatedAt)
+
+        if (index === 0)
+            feedback.isNotFirst = false
+        else
+            feedback.isNotFirst = true
+    }
+
     res.render('contribution/viewMyContributionById', {
         contribution,
         status,
@@ -157,13 +180,20 @@ const getUploadContribution = async (req, res) => {
 
     for (const contribution of contributions) {
         switch (contribution.status) {
+            case 'pending':
+                contribution.status = 'pending'
+                contribution.statusBadge = 'badge-secondary'
+                contribution.isEditEnabled = true
+                break;
             case 'approve':
                 contribution.status = 'approved'
-                contribution.statusColor = '#28a745'
+                contribution.statusBadge = 'badge-success'
+                contribution.isEditEnabled = false
                 break;
             case 'refer':
                 contribution.status = 'referred'
-                contribution.statusColor = '#dc3545'
+                contribution.statusBadge = 'badge-danger'
+                contribution.isEditEnabled = false
                 break;
         }
     }
@@ -189,6 +219,27 @@ const getUploadContribution = async (req, res) => {
 
     let numList = _.range(1, numOfPages + 1).map(x => ({ number: x, isActive: currentPage === x ? true : false }))
 
+    let currentDate = new Date()
+
+    let semester = await Semester.findOne({
+        $and: [
+            {
+                startDate: {
+                    $lte: currentDate
+                },
+            },
+            {
+                closureDate: {
+                    $gt: currentDate
+                }
+            }
+        ]
+    })
+
+    semester.startDateDisplay = semester.startDate.toLocaleDateString('en-GB')
+    semester.closureDateDisplay = semester.closureDate.toLocaleDateString('en-GB')
+    semester.submissionDeadlineDisplay = semester.submissionDeadline.toLocaleDateString('en-GB')
+
     res.render('contribution/uploadContribution', {
         active: { uploadDocument: true },
         contributions,
@@ -198,7 +249,8 @@ const getUploadContribution = async (req, res) => {
         isNextEnabled,
         previousPageNum,
         nextPageNum,
-        numOfUploads: count
+        numOfUploads: count,
+        semester
     })
 }
 
@@ -247,6 +299,20 @@ const getPendingContributions = async (req, res) => {
 const getProcessContribution = async (req, res) => {
     let contribution = await Contribution.findById(req.params.id)
 
+    await contribution.populate('userId').execPopulate()
+
+    for (let index = 0; index < contribution.contributionFeedbacks.length; index++) {
+        let feedback = contribution.contributionFeedbacks[index]
+        await contribution.populate(`contributionFeedbacks.${index}.userId`).execPopulate()
+
+        feedback.timeAgo = timeAgo.format(feedback.updatedAt)
+
+        if (index === 0)
+            feedback.isNotFirst = false
+        else
+            feedback.isNotFirst = true
+    }
+
     res.render('contribution/processContribution', {
         contribution
     })
@@ -258,7 +324,8 @@ const postContribution = async (req, res) => {
     arr.pop()
 
     let data = {
-        title: arr.join(''),
+        title: req.body.title,
+        content: req.body.content,
         fileName: req.file.filename,
         thumbnailFileName: `${req.file.filename.split('.')[0]}.jpg`,
         userId: req.user._id,
@@ -269,13 +336,52 @@ const postContribution = async (req, res) => {
     let contribution = Contribution(data)
     try {
         getThumbnail(data.fileName)
-        await contribution.save()
+        contribution = await contribution.save()
     } catch (err) {
         console.error(err.message)
         return res.status(400).send({
             message: err.message
         })
     }
+
+    let smtpTransport = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: 'nghiademo312@gmail.com',
+            pass: 'BxFU*8hNULYq#=YW'
+        }
+    })
+
+    let body = '<p>A new pending contribution has been uploaded by a student of your faculty.</p>' +
+        '<p>Please make a comment within 14 days in the link below</p>' +
+        `<b>Link:</b>${process.env.DOMAIN}/contribution/process/${contribution._id}`
+
+    let user = await User.findById(req.user._id)
+    await user.populate('profileId').execPopulate()
+
+    let coordinators = await User.find({
+        role: 'marketing coordinator'
+    })
+
+    let email = ''
+
+    for (const coordinator of coordinators) {
+        await coordinator.populate('profileId').execPopulate()
+
+        if (coordinator.profileId.facultyId.toString() == user.profileId.facultyId.toString())
+            email = coordinator.email
+    }
+
+    let mailOptions = {
+        to: email,
+        from: 'journal@gmail.com',
+        subject: 'New uploaded contribution',
+        html: body
+    }
+
+    await smtpTransport.sendMail(mailOptions);
 
     req.flash('success_msg', 'contribution posted successfully!')
     res.redirect('/contribution/upload')
@@ -315,6 +421,22 @@ const postProcessContribution = async (req, res) => {
     res.redirect('/contribution/pending')
 }
 
+const postProcessFeedbackContribution = async (req, res) => {
+    let { content, userId, contributionId } = req.body
+
+    let contribution = await Contribution.findById(contributionId)
+
+    await contribution.contributionFeedbacks.push({
+        content,
+        userId
+    })
+
+    await contribution.save()
+
+    req.flash('success_msg', 'sent feedback successfully!')
+    res.redirect(`/contribution/process/${contributionId}`)
+}
+
 module.exports = {
     getContributions,
     getContributionById,
@@ -325,5 +447,6 @@ module.exports = {
     getUploadContribution,
     postContribution,
     postDeleteContribution,
-    postProcessContribution
+    postProcessContribution,
+    postProcessFeedbackContribution
 }

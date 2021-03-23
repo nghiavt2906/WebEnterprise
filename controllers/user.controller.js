@@ -69,8 +69,31 @@ const postUser = async (req, res) => {
     res.redirect('/user')
 }
 
+const postDeleteUser = async (req, res) => {
+    let userId = req.body.id
+
+    let user = await User.findById(userId)
+    let profile = await Profile.findById(user.profileId)
+
+    await user.remove()
+    await profile.remove
+
+    req.flash('success_msg', 'deleted user successfully!')
+    res.redirect('/user')
+}
+
+const postAvatar = async (req, res) => {
+    let user = await User.findByIdAndUpdate(req.user._id, {
+        avatarUrl: req.file.filename
+    })
+
+    req.flash('success_msg', 'uploaded avatar successfully!')
+    res.redirect('/profile')
+}
 
 module.exports = {
     getUsers,
-    postUser
+    postUser,
+    postDeleteUser,
+    postAvatar
 }

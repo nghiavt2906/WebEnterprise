@@ -130,18 +130,29 @@
                                             <th>Gender</th>
                                             <th>Role</th>
                                             <th>Faculty</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {{#each users}}
                                             <tr class="custom-tr" onclick="window.location='/profile/{{ _id }}';">
-                                                    <th scope="row">1</th>
-                                                    <td>{{ profileId.firstName }}</td>
-                                                    <td>{{ profileId.lastName }}</td>
-                                                    <td>{{ username }}</td>
-                                                    <td>{{ profileId.gender }}</td>
-                                                    <td>{{ role }}</td>
-                                                    <td>{{ profileId.facultyId.name }}</td>
+                                                <th scope="row">1</th>
+                                                <td>{{ profileId.firstName }}</td>
+                                                <td>{{ profileId.lastName }}</td>
+                                                <td>{{ username }}</td>
+                                                <td>{{ profileId.gender }}</td>
+                                                <td>{{ role }}</td>
+                                                <td>{{ profileId.facultyId.name }}</td>
+                                                <td>
+                                                    <form action="/user/edit" method="post" style="display: inline-block;">
+                                                        <button type="submit" class="btn btn-primary" name="edit">Edit</button>
+                                                        <input type="hidden" name="id" value={{_id}}>
+                                                    </form>
+                                                    <form action="/user/delete" method="post" style="display: inline-block;">
+                                                        <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+                                                        <input type="hidden" name="id" value={{_id}}>
+                                                    </form>
+                                                </td>
                                             </tr>
                                         {{/each}}
                                     </tbody>

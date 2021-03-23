@@ -132,11 +132,23 @@
         </li>
         <li class="user-profile header-notification">
           <a href="#!" class="waves-effect waves-light">
-            <img
-              src="/assets/images/avatar-4.jpg"
-              class="img-radius"
-              alt="User-Profile-Image"
-            />
+            {{#if currentUser.avatarUrl}}
+              <img
+                class="user-img img-radius"
+                src="/avatars/{{currentUser.avatarUrl}}"
+                alt="user-img"
+                id="avatar"
+                data-toggle="modal" data-target="#exampleModal"
+              />
+            {{else}}
+              <img
+                class="user-img img-radius"
+                src="/assets/images/avatar-4.jpg"
+                alt="user-img"
+                id="avatar"
+                data-toggle="modal" data-target="#exampleModal"
+              />
+            {{/if}}
             <span>{{ currentUser.username }}</span>
             <i class="ti-angle-down"></i>
           </a>

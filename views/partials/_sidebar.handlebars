@@ -5,11 +5,23 @@
   <div class="pcoded-inner-navbar main-menu">
     <div class="">
       <div class="main-menu-header">
-        <img
-          class="img-80 img-radius"
-          src="/assets/images/avatar-4.jpg"
-          alt="User-Profile-Image"
-        />
+        {{#if currentUser.avatarUrl}}
+          <img
+            class="user-img img-radius"
+            src="/avatars/{{currentUser.avatarUrl}}"
+            alt="user-img"
+            id="avatar"
+            data-toggle="modal" data-target="#exampleModal"
+          />
+        {{else}}
+          <img
+            class="user-img img-radius"
+            src="/assets/images/avatar-4.jpg"
+            alt="user-img"
+            id="avatar"
+            data-toggle="modal" data-target="#exampleModal"
+          />
+        {{/if}}
         <div class="user-details">
           <span id="more-details"
             >{{ currentUser.username }}<i class="fa fa-caret-down"></i
@@ -42,51 +54,73 @@
         </a>
       </li>
     </ul>
-    <div class="pcoded-navigation-label" data-i18n="nav.category.forms">
-      File
-    </div>
-    <ul class="pcoded-item pcoded-left-item">
-      <li class="{{#if active.myContributions}}active{{/if}}">
-        <a href="/contribution/my" class="waves-effect waves-dark">
-          <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-          <span class="pcoded-mtext" data-i18n="nav.form-components.main"
-            >My Contributions</span
-          >
-          <span class="pcoded-mcaret"></span>
-        </a>
-      </li>
-      <li class="{{#if active.uploadDocument}}active{{/if}}">
-        <a href="/contribution/upload" class="waves-effect waves-dark">
-          <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-          <span class="pcoded-mtext" data-i18n="nav.form-components.main"
-            >Upload Document</span
-          >
-          <span class="pcoded-mcaret"></span>
-        </a>
-      </li>
-    </ul>
-    <div class="pcoded-navigation-label" data-i18n="nav.category.forms">
-      Management
-    </div>
-    <ul class="pcoded-item pcoded-left-item">
-      <li class="{{#if active.accounts}}active{{/if}}">
-        <a href="/user" class="waves-effect waves-dark">
-          <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-          <span class="pcoded-mtext" data-i18n="nav.form-components.main"
-            >Accounts</span
-          >
-          <span class="pcoded-mcaret"></span>
-        </a>
-      </li>
-      <li class="{{#if active.contributions}}active{{/if}}">
-        <a href="/contribution/pending" class="waves-effect waves-dark">
-          <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
-          <span class="pcoded-mtext" data-i18n="nav.form-components.main"
-            >Contributions</span
-          >
-          <span class="pcoded-mcaret"></span>
-        </a>
-      </li>
-    </ul>
+    {{#if isStudent}}
+      <div class="pcoded-navigation-label" data-i18n="nav.category.forms">
+        File
+      </div>
+      <ul class="pcoded-item pcoded-left-item">
+        <li class="{{#if active.myContributions}}active{{/if}}">
+          <a href="/contribution/my" class="waves-effect waves-dark">
+            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+            <span class="pcoded-mtext" data-i18n="nav.form-components.main"
+              >My Contributions</span
+            >
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+        <li class="{{#if active.uploadDocument}}active{{/if}}">
+          <a href="/contribution/upload" class="waves-effect waves-dark">
+            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+            <span class="pcoded-mtext" data-i18n="nav.form-components.main"
+              >Upload Document</span
+            >
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+      </ul>
+    {{/if}}
+
+    {{#if isCoordinator}}
+      <div class="pcoded-navigation-label" data-i18n="nav.category.forms">
+        Management
+      </div>
+      <ul class="pcoded-item pcoded-left-item">
+        <li class="{{#if active.contributions}}active{{/if}}">
+          <a href="/contribution/pending" class="waves-effect waves-dark">
+            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+            <span class="pcoded-mtext" data-i18n="nav.form-components.main"
+              >Contributions</span
+            >
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+      </ul>
+    {{/if}}
+
+    {{#if isAdmin}}
+      <div class="pcoded-navigation-label" data-i18n="nav.category.forms">
+        Management
+      </div>
+      <ul class="pcoded-item pcoded-left-item">
+        <li class="{{#if active.accounts}}active{{/if}}">
+          <a href="/user" class="waves-effect waves-dark">
+            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+            <span class="pcoded-mtext" data-i18n="nav.form-components.main"
+              >Accounts</span
+            >
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+        <li class="{{#if active.semesters}}active{{/if}}">
+          <a href="/semester" class="waves-effect waves-dark">
+            <span class="pcoded-micon"><i class="ti-layers"></i><b>FC</b></span>
+            <span class="pcoded-mtext" data-i18n="nav.form-components.main"
+              >Semesters</span
+            >
+            <span class="pcoded-mcaret"></span>
+          </a>
+        </li>
+      </ul>
+    {{/if}}
   </div>
 </nav>

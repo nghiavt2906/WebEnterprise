@@ -1,8 +1,25 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+const ContributionFeedbackSchema = new Schema({
+    content: {
+        type: String,
+        required: true
+    },
+    userId: {
+        type: String,
+        required: true,
+        ref: 'user'
+
+    }
+}, { timestamps: true })
+
 const ContributionSchema = new Schema({
     title: {
+        type: String,
+        required: true
+    },
+    content: {
         type: String,
         required: true
     },
@@ -29,8 +46,10 @@ const ContributionSchema = new Schema({
     },
     userId: {
         type: Schema.ObjectId,
-        required: true
-    }
+        required: true,
+        ref: 'user'
+    },
+    contributionFeedbacks: [ContributionFeedbackSchema]
 }, { timestamps: true })
 
 module.exports = mongoose.model('contribution', ContributionSchema)

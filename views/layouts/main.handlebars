@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css"
      rel="stylesheet"/>
+     <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
     <!-- Style.css -->
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
 
@@ -59,7 +60,19 @@
   </div>
 
 
+  <!-- Include the Quill library -->
+  <script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+
+  <!-- Initialize Quill editor -->
+  <script>
+  var editor = new Quill('#editor', {
+      modules: { toolbar: '#toolbar' },
+      theme: 'snow'
+  });
+  </script>
   <!-- Required Jquery -->
+  <script src="assets/vendors/quill/quill.min.js"></script>
+  <script src="assets/js/pages/form-editor.js"></script>
   <script type="text/javascript" src="/assets/js/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="/assets/js/jquery-ui/jquery-ui.min.js "></script>
   <script type="text/javascript" src="/assets/js/popper.js/popper.min.js"></script>

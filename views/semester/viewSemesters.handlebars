@@ -1,0 +1,129 @@
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                
+                <!-- Page-body start -->
+                <div class="page-body">
+                    <h2 class="modal-title" id="exampleModalLabel" style="margin-top: -1rem;">Semester Management</h2>
+                    
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
+                    style="margin-bottom: 1.5rem;">
+                        Add a new semester
+                    </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">add a new semester</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="/semester" method="post">
+                                    <div class="modal-body">
+                                        <div class="mb-3 row">
+                                            <label for="name" class="col-sm-4 col-form-label">Name:</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" class="form-control" id="name" name="name">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="startDate" class="col-sm-4 col-form-label">Start Date:</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="date" id="startDate" name="startDate">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="closureDate" class="col-sm-4 col-form-label">Closure Date:</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="date" id="closureDate" name="closureDate">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="submissionDeadline" class="col-sm-4 col-form-label">Submission Date:</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" type="date" id="submissionDeadline" name="submissionDeadline">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        </div>
+
+                    <!-- Basic table card start -->
+                    <div class="card">
+                       
+                        <div class="card-block table-border-style">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Submission Deadline</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each semesters}}
+                                            <tr class="custom-tr">
+                                                <th scope="row">1</th>
+                                                <td>{{ name }}</td>
+                                                <td>{{ responseStartDate }}</td>
+                                                <td>{{ responseClosureDate }}</td>
+                                                <td>{{ responseSubmissionDeadline }}</td>
+                                                <td>
+                                                        <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-{{_id}}">Edit</button>
+                                                    
+                                                    <form action="/semester/delete" method="post" style="display: inline-block;">
+                                                        <button type="submit" class="btn btn-danger" name="delete">Delete</button>
+                                                        <input type="hidden" name="id" value={{_id}}>
+                                                    </form>
+                                                </td>
+                                            </tr>
+
+                                            <div class="modal fade" id="modal-{{_id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Edit semester</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <form action="/semester/edit" method="post">
+                                                            <div class="modal-body">
+                                                                <div class="mb-3 row">
+                                                                    <label for="name" class="col-sm-4 col-form-label">Name:</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input type="text" class="form-control" id="name" name="name">
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <!-- Page-body end -->
+            </div>
+        </div>
+        <!-- Main-body end -->
+    </div>
+</div>

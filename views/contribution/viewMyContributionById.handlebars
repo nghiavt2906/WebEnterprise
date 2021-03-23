@@ -22,81 +22,126 @@
   </div>
   <br />
   <!-- Page-header end -->
-  <div class="pcoded-inner-content">
-        <!-- Main-body start -->
-        <div class="main-body">
-            <div class="card">
-                <div class="container">
-                    <div class="row grid-demo">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8" style="background: honeydew">
-                        <div class="page-wrapper" style="background: #ececec">
-                            <h3>{{ contribution.title }}</h3>
-                            <ul>
-                                <li>Status: <b style="color: {{statusColor}}">{{ status }}</b></li> 
-                                <li>Submission Date: {{ submissionDate }}</li> 
-                            </ul>
-                            <button class="btn btn-primary mt-2">
-                                <a href="/contribution/reupload?id={{ contribution._id }}" style="color: white">Reupload</a>
-                            </button>
-                            <div class="card mt-3" style="height: 45rem">
-                                <div id="viewer" style="height: 45rem"></div>
-                            </div>
-                            <input type="hidden" id="fileName" name="fileName" value='{{contribution.fileName}}'>
+  <section class="section">
+        <div class="card" style="margin: 0 3rem;">
+            <div class="card-header">
+                <h4>{{ contribution.title }}</h4>
+                <b>Status: <span style="color: {{statusColor}};display:inline">{{ status }}</span></b> 
+            </div>
+            <div class="card-body" style="margin: 0 1.5rem;">
+                <div id="body-header" style="display: flex; align-direction: row; margin-bottom: 1rem; justify-content: space-between">
+                    <div class="right-body-header" style="display: flex; align-direction: row;">
+                        {{#if contribution.userId.avatarUrl}}
+                          <img src="/avatars/{{contribution.userId.avatarUrl}}" style="width:3rem;height:auto;border: #448aff solid 3px" class="img-radius" alt="User-Profile-Image">
+                        {{else}}
+                          <img src="/assets/images/avatar-4.jpg" style="width:3rem;height:auto;border: #448aff solid 3px" class="img-radius" alt="User-Profile-Image">
+                        {{/if}}
+                        <div class="user-info ml-3">
+                            <a href="#" style="font-size: 1rem;"><b>{{ contribution.userId.username }}</b></a> 
+                            <br>
+                            <span>782 followers</span>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
-                    </div>
+                    <a href="#">
+                        <i class="ti-bookmark" style="font-size: 2rem;"></i>
+                    </a>
                 </div>
-
-                <div class="container">
-                    <div class="row grid-demo">
-                    <div class="col-md-2"></div>
-                    <div class="col-md-8">
-                        <div class="page-wrapper">
-                        <div class="card">
-                            <div class="card-block table-border-style" style="padding: 5%">
-                            <div class="table-responsive">
-                                <table class="table">
-                                <div class="container mt-5">
-                                    <div class="d-flex justify-content-center row">
-                                    <div class="col-md-10">
-                                        <div class="d-flex flex-column comment-section">
-                                        <div class="bg-white"></div>
-                                        <div class="bg-light p-2">
-                                            <div class="d-flex flex-row align-items-start">
-                                            <textarea
-                                                class="form-control ml-1 shadow-none textarea"
-                                            ></textarea>
-                                            </div>
-                                            <div class="mt-2 text-right">
-                                            <button
-                                                class="btn btn-primary btn-sm shadow-none"
-                                                type="button"
-                                            >
-                                                Post comment</button
-                                            ><button
-                                                class="btn btn-outline-primary btn-sm ml-1 shadow-none"
-                                                type="button"
-                                            >
-                                                Cancel
-                                            </button>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
-                                </table>
-                            </div>
-                            </div>
-                        </div>
-                        </div>
-                        <div class="col-md-2"></div>
-                    </div>
-                    </div>
+                <hr>
+                <div id="content">
+                    {{{ contribution.content }}}
                 </div>
             </div>
         </div>
+    </section>
+  <section class="section mt-3">
+        <div class="card" style="margin: 0 3rem;">
+            <div class="card-header custom-card-header">
+                <h4>Document preview</h4>
+                <i class="ti-file mr-1"></i> {{ contribution.originalFileName }}
+            </div>
+            <div class="card-body" style="margin: 0 1.5rem;">
+                <div class="container mb-3">
+                            </div>
+                            <div class="card" style="height: 45rem">
+                                <div id="viewer" style="height: 45rem"></div>
+                            </div>
+                            <input type="hidden" id="fileName" name="fileName" value='{{contribution.fileName}}'>
+            </div>
+        </div>
+    </section>
+  <div class="pcoded-inner-content mt-2">
+        <div class="tab-pane" id="review" role="tabpanel" style="padding: 0 8rem">
+                <div class="card">
+                    <div class="card-header">
+                    <h5 class="card-header-text">Reviews</h5>
+                    </div>
+                    <div class="card-block">
+                    <ul class="media-list">
+                      {{#each contribution.contributionFeedbacks}}
+                      {{#if isNotFirst}}
+                        <hr>
+                      {{/if}}
+                        <li class="media">
+                        <div class="media-left">
+                            <a href="#">
+                            {{#if contribution.userId.avatarUrl}}
+                              <img
+                                  class="media-object img-radius comment-img"
+                                  src="/avatars/{{contribution.userId.avatarUrl}}"
+                                  alt="Generic placeholder image"
+                              />                              
+                            {{else}}
+                              <img
+                                  class="media-object img-radius comment-img"
+                                  src="/assets/images/avatar-4.jpg"
+                                  alt="Generic placeholder image"
+                              />
+                            {{/if}}
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h6 class="media-heading">
+                              <a href="#">
+                                {{ userId.username }}
+                              </a>
+                            <span class="f-12 text-muted m-l-5">{{ timeAgo }}</span
+                            >
+                            </h6>
+                            <p class="m-b-0">
+                              {{ content }}
+                            </p>
+                            <div class="m-b-25">
+                            <span
+                                ><a href="#!" class="m-r-10 f-12"
+                                >Reply</a
+                                ></span
+                            ><span><a href="#!" class="f-12">Edit</a> </span>
+                            </div>
+                            
+                        </li>
+                      {{/each}}
+                    </ul>
+                    <form action="/contribution/process/feedback" method="post" class="form-material right-icon-control">
+                        <div class="form-group form-primary">
+                        <input type="text" class="form-control" name="content" required="" />
+                        <span class="form-bar"></span>
+                        <label class="float-label"
+                            >Write something.....</label
+                        >
+                        </div>
+                        <div class="form-icon">
+                        <input type="hidden" name="userId" value={{ currentUser._id }}>
+                        <input type="hidden" name="contributionId" value={{ contribution._id}}>
+                        <button
+                          type="submit"
+                          class="btn btn-success btn-icon waves-effect waves-light"
+                        >
+                            <i class="icofont icofont-send-mail"></i>
+                        </button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
   </div>
 </div>

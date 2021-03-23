@@ -24,6 +24,9 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true,
         ref: 'profile'
+    },
+    avatarUrl: {
+        type: String
     }
 }, { timestamps: true })
 

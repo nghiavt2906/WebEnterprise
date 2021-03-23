@@ -28,7 +28,6 @@ const ProfileSchema = new Schema({
     },
     facultyId: {
         type: Schema.ObjectId,
-        required: true,
         ref: 'faculty'
     }
 }, { timestamps: true })

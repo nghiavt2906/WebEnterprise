@@ -5,8 +5,8 @@
         <div class="row align-items-center">
             <div class="col-md-8">
             <div class="page-header-title">
-                <h5 class="m-b-10">Upload document</h5>
-                <p class="m-b-0">Welcome to Mega Able</p>
+                <h5 class="m-b-10">{{ semester.name }}</h5>
+                <p class="m-b-0">Start: {{ semester.startDateDisplay }} - End: {{ semester.closureDateDisplay }}</p>
             </div>
             </div>
             <div class="col-md-4">
@@ -14,7 +14,7 @@
                 <li class="breadcrumb-item">
                 <a href="/"> <i class="fa fa-home"></i> </a>
                 </li>
-                <li class="breadcrumb-item"><a href="#!">Upload Document</a></li>
+                <li class="breadcrumb-item"><a href="#!">Document</a></li>
             </ul>
             </div>
         </div>
@@ -22,76 +22,127 @@
     </div>
     <br />
 
-    <div class="container" style="margin-top: 25px">
-        <br />
-        <div class="row">
-            <div class="col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-body" style="margin: 0px 20px">
-                <!-- Upload file -->
+    <section class="section">
+        <div class="card" style="margin: 0 3rem;">
+            <div class="card-header custom-card-header">
+                <h4>Submit a new document</h4>
+                <b style="display:inline-block">Submission Deadline</b>: <span class="text-danger" style="display:inline"><b>{{ semester.submissionDeadlineDisplay}}</b></span>
+            </div>
+            <div class="card-body" style="margin: 0 1.5rem;">
                 <form action="/contribution" method="post" enctype="multipart/form-data">
-                    <div class="input-group mb-3" style="margin-top: 20px">
-                        <input type="file" name="file" class="form-control" id="upload" />
-                        <input type="submit" id="submit" style="visibility: hidden;position: absolute">
-                        <label class="input-group-text" for="submit">Upload</label>
+                    <div class="form-group mb-3" style="margin-top: 20px">
+                        <input type="text" name="title" class="form-control" id="title" placeholder="Title" required/>
                     </div>
+                    <div class="input-group mb-3" style="margin-top: 20px">
+                        <input type="file" name="file" class="form-control" id="upload" required/>
+                        <input type="submit" id="submit" style="visibility: hidden;position: absolute">
+                    </div>
+                    <input type="hidden" id="content" name="content" required>
                 </form>
-                <!-- Upload Finished -->
-                <div class="d-flex justify-content-between">
-                    <div class="col-lg-12">
-                    <ul class="list-group list-group-flush">
-                        <li
-                        class="list-group-item"
-                        style="background-color: #f1f1f1; margin: 0px"
-                        >
-                            <div class="container">
-                                <div class="row">
+                <label for="editor"><b>Content:</b></label>
+                <!-- Create the toolbar container -->
+                <div id="toolbar" style="background-color: #f5f5f5; border-radius: 10px 10px 0 0;">
+                    <button class="ql-bold">Bold</button>
+                    <button class="ql-italic">Italic</button>
+                    <button class="ql-underline">Underline</button>
+                    <button class="ql-list" value="bullet"></button>
+                    <button class="ql-indent" value="+1"></button>
+                    <button class="ql-indent" value="-1"></button>
+                    <button class="ql-align" value="center"></button>
+                    <button class="ql-align" value="right"></button>
+                    <button class="ql-align" value="justify"></button>
+                    <button class="ql-image">Image</button>               
+                </div>
+                <!-- Create the editor container -->
+                <div id="editor" style="border-radius: 0 0 10px 10px; height: 200px;"></div>
+                <div class="form-check container" style="padding: 0.6rem 0">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="margin:0">
+                    <label class="form-check-label" for="flexCheckDefault" style="padding-left:0.5rem">
+                        <span>I've read and accept the <a class="required-field" href="#" style="color:#448aff">terms & conditions</a></span>
+                    </label>
+                </div>
+                <button class="btn btn-primary mt-2" id="submit-btn" type="submit">Submit</button>
+            </div>
+        </div>
+    </section> 
+
+    <section class="section mt-4">
+        <div class="card" style="margin: 0 3rem;">
+            <div class="card-header custom-card-header">
+                <h4>Uploaded Documents</h4>
+            </div>
+            <div class="card-body" style="margin: 0 1.5rem;">
+                <ul class="list-group list-group-flush">
+                    <li
+                    class="list-group-item"
+                    style="background-color: #f1f1f1; margin: 0px"
+                    >
+                        <div class="container">
+                            <div class="row" style="display: flex;align-items: center;">
                                 <div
-                                    class="col-3"
-                                    style="text-align: left; padding-top: 10px"
+                                    class="col py-1"
+                                    style="text-align: left"
                                 >
                                     <p style="font-size: 1rem; font-weight: bold">
                                     {{numOfUploads}} uploads received
                                     </p>
                                 </div>
                                 <div
-                                    class="col-3"
-                                    style="text-align: left; padding-top: 10px"
+                                    class="col py-1"
+                                    style="text-align: left"
                                 >
                                     <p style="font-size: 1rem; font-weight: bold">
                                     Title
                                     </p>
                                 </div>
                                 <div
-                                    class="col"
-                                    style="text-align: left; padding-top: 10px"
+                                    class="col py-1"
+                                    style="text-align: left"
+                                >
+                                    <p style="font-size: 1rem; font-weight: bold">
+                                    Last Modified
+                                    </p>
+                                </div>
+                                <div
+                                    class="col py-1"
+                                    style="text-align: left"
                                 >
                                     <p style="font-size: 1rem; font-weight: bold">
                                     Status
                                     </p>
                                 </div>
-                                <div class="col"></div>
+                                <div
+                                    class="col py-1"
+                                    style="text-align: left"
+                                >
+                                    <p style="font-size: 1rem; font-weight: bold">
+                                    </p>
                                 </div>
                             </div>
-                        </li>
-                        {{#if contributions}}
-                            {{#each contributions}}
-                                <li class="list-group-item">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-3" style="text-align: left">
-                                                <a href="/contribution/my/{{_id}}">{{originalFileName}}</a>
-                                            </div>
-                                            <div class="col-3" style="text-align: left">
-                                                <a href="/contribution/my/{{_id}}">{{title}}</a>
-                                            </div>
-                                            <div class="col" style="text-align: left">
-                                                <b style="color: {{statusColor}}">{{ status }}</b>
-                                            </div>
-                                            <div class="col" style="text-align: left">
+                        </div>
+                    </li>
+                    {{#if contributions}}
+                        {{#each contributions}}
+                            <li class="list-group-item">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col" style="text-align: left">
+                                            <a href="/contribution/my/{{_id}}">{{originalFileName}}</a>
+                                        </div>
+                                        <div class="col" style="text-align: left">
+                                            <a href="/contribution/my/{{_id}}">{{title}}</a>
+                                        </div>
+                                        <div class="col" style="text-align: left">
+                                            <b>Friday, 29 November 2019</b>
+                                        </div>
+                                        <div class="col" style="text-align: left">
+                                            <span class="badge {{ statusBadge }}">{{ status }}</span>
+                                        </div>
+                                        <div class="col" style="text-align: left">
+                                            {{#if isEditEnabled}}
                                                 <button class="btn btn-primary">
                                                     <a href="#" style="color: white;">
-                                                        Reupload 
+                                                        Edit 
                                                     </a>
                                                 </button>
                                                 <form action="/contribution/delete" method="post" style="display: inline-block;">
@@ -99,43 +150,40 @@
                                                     <input type="hidden" name="redirect" value="/contribution/upload">
                                                     <input type="hidden" name="id" value={{_id}}>
                                                 </form>
-                                            </div>
+                                            {{/if}}
                                         </div>
                                     </div>
-                                </li>
-                            {{/each}}
-                        {{else}}
-                            <b class="my-3">No contributions found.</b>
-                        {{/if}}
+                                </div>
+                            </li>
+                        {{/each}}
+                    {{else}}
+                        <b class="my-3">No contributions found.</b>
+                    {{/if}}
+                </ul>
+
+                <nav aria-label="Page navigation" class="mt-3">
+                    <ul class="pagination justify-content-center">
+                    {{#if isPreviousEnabled}}
+                        <li class="page-item">
+                        <a class="page-link" href="/contribution/upload?page={{previousPageNum}}">Previous</a>
+                        </li>
+                    {{/if}}
+
+                    {{#each numList}}
+                        <li {{#if isActive}} class="page-item active" {{else}} class="page-item" {{/if}}>
+                        <a class="page-link" {{#if isActive}} href="#" {{else}} href="/contribution/upload?page={{number}}" {{/if}}>{{ number }}</a>
+                        </li>
+                    {{/each}}
+                    
+                    {{#if isNextEnabled}}
+                        <li class="page-item">
+                        <a class="page-link" href="/contribution/upload?page={{nextPageNum}}">Next</a>
+                        </li>
+                    {{/if}}
                     </ul>
-                    </div>
-                </div>
-                </div>
-            </div>
+                </nav>
             </div>
         </div>
-
-        <nav aria-label="Page navigation" class="mt-3">
-            <ul class="pagination justify-content-center">
-            {{#if isPreviousEnabled}}
-                <li class="page-item">
-                <a class="page-link" href="/contribution/upload?page={{previousPageNum}}">Previous</a>
-                </li>
-            {{/if}}
-
-            {{#each numList}}
-                <li {{#if isActive}} class="page-item active" {{else}} class="page-item" {{/if}}>
-                <a class="page-link" {{#if isActive}} href="#" {{else}} href="/contribution/upload?page={{number}}" {{/if}}>{{ number }}</a>
-                </li>
-            {{/each}}
-            
-            {{#if isNextEnabled}}
-                <li class="page-item">
-                <a class="page-link" href="/contribution/upload?page={{nextPageNum}}">Next</a>
-                </li>
-            {{/if}}
-            </ul>
-        </nav>
-    </div>
+    </section>
     <!-- Page upload end -->
 </div>

@@ -21,7 +21,7 @@
   margin-bottom: 3rem;
 }
 
-.card:hover{
+.custom-card:hover{
   transform:scale(1.03);
 }
 
@@ -34,4 +34,16 @@ footer {
   margin-top: 10rem;
   padding: 2rem 0rem;
   background-color: #f9fafb;
+}
+
+.required-field::after {
+  content: "*";
+  color: red;
+  margin-left:2px;
+}
+
+.custom-card-header {
+  /* border-bottom: #448aff solid 2px !important; */
+  background-color: #448aff !important;
+  color: white !important;
 }

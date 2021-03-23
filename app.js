@@ -27,6 +27,7 @@ const contributionRouter = require(path.join(__dirname, 'routes/contribution'))
 const profileRouter = require(path.join(__dirname, 'routes/profile'))
 const facultyRouter = require(path.join(__dirname, 'routes/faculty'))
 const userRouter = require(path.join(__dirname, 'routes/user'))
+const semesterRouter = require(path.join(__dirname, 'routes/semester'))
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -70,10 +71,12 @@ app.use(withCurrentUser)
 app.use('/', homeRouter)
 app.get('/docs/*.docx', serveMedia)
 app.get('/thumbnails/*.jpg', serveMedia)
+app.get('/avatars/*', serveMedia)
 app.use('/contribution', contributionRouter)
 app.use('/profile', profileRouter)
 app.use('/faculty', facultyRouter)
 app.use('/user', userRouter)
+app.use('/semester', semesterRouter)
 
 app.listen(port, err => {
     if (err) throw err

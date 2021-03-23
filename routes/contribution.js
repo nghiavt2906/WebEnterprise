@@ -1,16 +1,9 @@
 const express = require('express')
 const multer = require('multer')
-const path = require('path')
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './media/docs')
-    },
-    filename: function (req, file, cb) {
-        cb(null, `${file.originalname.split('.')[0]}-${Date.now()}.${file.originalname.split('.').pop()}`)
-    }
-})
-const upload = multer({ storage })
+const createFileUploader = require('../helpers/fileUploader')
+
+const upload = createFileUploader('./media/docs')
 
 const router = express.Router()
 
@@ -29,5 +22,6 @@ router.post('/delete', controller.postDeleteContribution)
 router.get('/pending', controller.getPendingContributions)
 router.get('/process/:id', controller.getProcessContribution)
 router.post('/process/', controller.postProcessContribution)
+router.post('/process/feedback', controller.postProcessFeedbackContribution)
 
 module.exports = router
