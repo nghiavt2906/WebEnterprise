@@ -6,7 +6,10 @@ const User = require('../models/User')
 const Profile = require('../models/Profile')
 
 const getUsers = async (req, res) => {
-    let users = await User.find()
+    let users = await User.find({
+        role: { $ne: 'admin' }
+    })
+
     let faculties = await Faculty.find()
 
     for (const user of users) {
@@ -76,7 +79,7 @@ const postDeleteUser = async (req, res) => {
     let profile = await Profile.findById(user.profileId)
 
     await user.remove()
-    await profile.remove
+    await profile.remove()
 
     req.flash('success_msg', 'deleted user successfully!')
     res.redirect('/user')

@@ -4,6 +4,7 @@ const passport = require('passport')
 
 const User = require('../models/User')
 const Profile = require('../models/Profile')
+const Faculty = require('../models/Faculty')
 
 const getLogin = (req, res) => {
     res.render('auth/login', {
@@ -19,9 +20,11 @@ const postLogin = (req, res, next) => {
     })(req, res, next)
 }
 
-const getSignup = (req, res) => {
+const getSignup = async (req, res) => {
+    let faculties = await Faculty.find()
     res.render('auth/signUp', {
-        layout: 'auth'
+        layout: 'auth',
+        faculties
     })
 }
 
@@ -32,7 +35,8 @@ const postSignup = async (req, res) => {
         'lastName',
         'gender',
         'address',
-        'phoneNumber'
+        'phoneNumber',
+        'facultyId'
     ])
 
     let user = User(userData)
@@ -58,11 +62,11 @@ const postSignup = async (req, res) => {
     user.password = hashedPassword
 
     try {
-        await user.validate()
         await profile.validate()
-
         const profileResult = await profile.save()
         user.profileId = profileResult._id
+
+        await user.validate()
         await user.save()
     } catch (err) {
         console.error(err.message)
