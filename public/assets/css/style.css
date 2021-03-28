@@ -1,33 +1,5 @@
-/**
-
-Template Name: GURU Able Admin Template
-Author: #
-Email: #
-File: style.css
-**/
-/* =============
-  == Table of Contents==
-
-	- Custom Css
-	- Generic classes
-		-	Margin, Padding, Font class, text align, position, floating, overflow, background class, text color, display class, boarder class
-	- Theme Elements
-		-	Icons, Accordion, Button, Redial, floating actions, FAB, tabs, typography, buttons, box shadow, slider page, error page, Breadcrumb, pagination, Basic card, Login card
-	- General Elements
-		-	Modal, Nestable, Lable & Badges, List, Portlates, Preloader, Calender, To-Do, Materialize general elements, Lables
-	- Advance Form Elements
-	- Pages
-		-	Loader page, Invoice, Tasklist, Task detail, Range-slider, Counter, Maintenance, Color, FAQ, Progress, Panels & wells, Contact card, Auth pages, Flag
-		-	Gallery, Products pages, Widget, Email, Social timeline, Datatable, Chat, Blog, Wizard, CRM dashboard, Task board, Issue list, Chartlist, X-editable
-		-	Home chat, Dashboard 1-2-3-4
-	- Responsive media class
-
-============= */
-/**  =====================
-      Custom css start
-==========================  **/
 body {
-  background-color: #f3f3f3;
+  background-color: #f6f6f6;
   font-size: 0.875em;
   overflow-x: hidden;
   color: #455a64;
@@ -351,7 +323,7 @@ b, strong {
     top: 0;
     left: 0; }
   .page-header .page-block {
-    padding: 35px 40px; }
+    padding: 31px 40px; }
     .page-header .page-block .breadcrumb-title {
       float: right; }
       .page-header .page-block .breadcrumb-title a {
@@ -1431,7 +1403,9 @@ a.bg-danger:hover {
 
 .card-title,
 h5 {
-  margin: 0; }
+  margin: 0; 
+  font-size: 2.62rem;
+}
 
 .card-header.followers a {
   font-weight: 500;
@@ -5172,7 +5146,7 @@ select.form-control:not([size]):not([multiple]) {
 /*====== Image-sizes css ends ======*/
 /*======= Text css starts ===========*/
 .text-primary {
-  color: #448aff !important; }
+  color: #448aff }
 
 .text-warning {
   color: #ffe100 !important; }
@@ -5936,8 +5910,7 @@ table tbody .border-bottom-info td {
 
 /*======= All-color css ends  ======= */
 /**====== Generic-class css end ======**/
-.pcoded[nav-type="st1"] .pcoded-item.pcoded-left-item > li:nth-child(1) > a > .pcoded-micon {
-  color: #448aff; }
+
 .pcoded[nav-type="st1"] .pcoded-item.pcoded-left-item > li:nth-child(2) > a > .pcoded-micon {
   color: #b71c1c; }
 .pcoded[nav-type="st1"] .pcoded-item.pcoded-left-item > li:nth-child(3) > a > .pcoded-micon {
@@ -6570,7 +6543,7 @@ table tbody .border-bottom-info td {
   .pcoded[theme-layout="vertical"] .pcoded-navbar[pcoded-navbar-position="absolute"] {
     height: 100%; }
   .pcoded[theme-layout="vertical"] .pcoded-navbar[pcoded-navbar-position="fixed"] {
-    top: 56px; }
+    top: 61px; }
 .pcoded[theme-layout="vertical"] .pcoded-content {
   position: relative;
   display: block; }
