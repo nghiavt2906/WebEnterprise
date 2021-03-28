@@ -94,9 +94,45 @@ const postAvatar = async (req, res) => {
     res.redirect('/profile')
 }
 
+const getEditUser = async (req, res) => {
+    let user = await User.findById(req.params.id)
+    await user.populate('profileId').execPopulate()
+    let faculties = await Faculty.find()
+
+    if (user.profileId.gender === 'male') {
+        isMaleSelected = true
+        isFemaleSelected = false
+    }
+    else {
+        isFemaleSelected = true
+        isMaleSelected = false
+    }
+
+    for (let index = 0; index < faculties.length; index++) {
+        if (faculties[index]._id.toString() === user.profileId.facultyId.toString())
+            faculties[index].isSelected = true
+        else
+            faculties[index].isSelected = false
+    }
+
+    res.render('user/edit', { user, faculties, isMaleSelected, isFemaleSelected })
+}
+
+const postEditUser = async (req, res) => {
+    let user = await User.findById(req.body.id)
+    user.email = req.body.email
+    await Profile.findByIdAndUpdate(user.profileId, req.body)
+    await user.save()
+
+    req.flash('success_msg', 'updated user successfully!')
+    res.redirect('/user')
+}
+
 module.exports = {
     getUsers,
+    getEditUser,
     postUser,
+    postEditUser,
     postDeleteUser,
     postAvatar
 }

@@ -10,7 +10,18 @@ const ContributionFeedbackSchema = new Schema({
         type: String,
         required: true,
         ref: 'user'
+    }
+}, { timestamps: true })
 
+const ContributionCommentSchema = new Schema({
+    content: {
+        type: String,
+        required: true
+    },
+    userId: {
+        type: String,
+        required: true,
+        ref: 'user'
     }
 }, { timestamps: true })
 
@@ -49,7 +60,8 @@ const ContributionSchema = new Schema({
         required: true,
         ref: 'user'
     },
-    contributionFeedbacks: [ContributionFeedbackSchema]
+    contributionFeedbacks: [ContributionFeedbackSchema],
+    contributionComments: [ContributionCommentSchema]
 }, { timestamps: true })
 
 module.exports = mongoose.model('contribution', ContributionSchema)

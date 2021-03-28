@@ -8,6 +8,7 @@ const nodemailer = require('nodemailer')
 
 const { getThumbnail } = require('../helpers/thumbnailExtractor')
 const Contribution = require('../models/Contribution')
+const Faculty = require('../models/Faculty')
 const Profile = require('../models/Profile')
 const Semester = require('../models/Semester')
 const User = require('../models/User')
@@ -21,14 +22,32 @@ const getContributions = async (req, res) => {
     let currentPage = parseInt(req.query.page)
     if (!currentPage)
         currentPage = 1
+    let user = req.user
+    let contributions
+    let count
+    if (user.role === 'student' || user.role === 'guest') {
+        await user.populate('profileId').execPopulate()
 
-    let contributions = await Contribution
-        .find({
-            status: 'approve'
-        })
-        .skip((perPage * currentPage) - perPage)
-        .limit(perPage)
-    let count = await Contribution.countDocuments({ status: 'approve' })
+        contributions = await Contribution
+            .find({
+                status: 'approve',
+                facultyId: user.profileId.facultyId
+            })
+            .skip((perPage * currentPage) - perPage)
+            .limit(perPage)
+
+        count = await Contribution.countDocuments({ status: 'approve', facultyId: user.profileId.facultyId })
+    } else {
+        let facultyId = req.query.id
+        contributions = await Contribution
+            .find({
+                status: 'approve',
+                facultyId
+            })
+            .skip((perPage * currentPage) - perPage)
+            .limit(perPage)
+        count = await Contribution.countDocuments({ status: 'approve' })
+    }
 
     let numOfPages = Math.ceil(count / perPage)
 
@@ -160,6 +179,20 @@ const getContributionById = async (req, res) => {
                 i++
             }
         }
+
+    await contribution.populate('userId').execPopulate()
+
+    for (let index = 0; index < contribution.contributionComments.length; index++) {
+        let comment = contribution.contributionComments[index]
+        await contribution.populate(`contributionComments.${index}.userId`).execPopulate()
+
+        comment.timeAgo = timeAgo.format(comment.updatedAt)
+
+        if (index === 0)
+            comment.isNotFirst = false
+        else
+            comment.isNotFirst = true
+    }
 
     res.render('contribution/details', {
         contribution,
@@ -437,6 +470,22 @@ const postProcessFeedbackContribution = async (req, res) => {
     res.redirect(`/contribution/process/${contributionId}`)
 }
 
+const postCommentContribution = async (req, res) => {
+    let { content, userId, contributionId } = req.body
+
+    let contribution = await Contribution.findById(contributionId)
+
+    await contribution.contributionComments.push({
+        content,
+        userId
+    })
+
+    await contribution.save()
+
+    req.flash('success_msg', 'commented successfully!')
+    res.redirect(`/contribution/details/${contributionId}`)
+}
+
 module.exports = {
     getContributions,
     getContributionById,
@@ -448,5 +497,6 @@ module.exports = {
     postContribution,
     postDeleteContribution,
     postProcessContribution,
-    postProcessFeedbackContribution
+    postProcessFeedbackContribution,
+    postCommentContribution
 }

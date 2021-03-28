@@ -1,5 +1,4 @@
 const express = require('express')
-const multer = require('multer')
 
 const createFileUploader = require('../helpers/fileUploader')
 
@@ -17,6 +16,7 @@ router.get('/my/:id', controller.getMyContributionById)
 
 router.get('/upload', controller.getUploadContribution)
 router.get('/details/:id', controller.getContributionById)
+router.post('/details/comment', controller.postCommentContribution)
 router.post('/delete', controller.postDeleteContribution)
 
 router.get('/pending', controller.getPendingContributions)

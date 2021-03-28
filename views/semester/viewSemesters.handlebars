@@ -106,10 +106,32 @@
                                                                 <div class="mb-3 row">
                                                                     <label for="name" class="col-sm-4 col-form-label">Name:</label>
                                                                     <div class="col-sm-8">
-                                                                        <input type="text" class="form-control" id="name" name="name">
+                                                                        <input type="text" class="form-control" id="name" name="name" value='{{name}}'>
                                                                     </div>
                                                                 </div>
-                                                                
+                                                                <div class="mb-3 row">
+                                                                    <label for="startDate" class="col-sm-4 col-form-label">Start Date:</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input class="form-control" type="date" id="startDate" name="startDate" value="{{editStartDate}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="closureDate" class="col-sm-4 col-form-label">Closure Date:</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input class="form-control" type="date" id="closureDate" name="closureDate" value="{{editClosureDate}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="mb-3 row">
+                                                                    <label for="submissionDeadline" class="col-sm-4 col-form-label">Submission Date:</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input class="form-control" type="date" id="submissionDeadline" name="submissionDeadline" value="{{editSubmissionDeadline}}">
+                                                                    </div>
+                                                                </div>
+                                                                <input type="hidden" name="id" value={{_id}}>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                                <button type="submit" class="btn btn-primary">submit</button>
                                                             </div>
                                                         </form>
                                                     </div>
