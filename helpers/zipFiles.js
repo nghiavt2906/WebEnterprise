@@ -24,6 +24,9 @@ const zipFiles = () => {
             return
 
         const lastestSemester = await Semester.findOne({}, {}, { sort: { 'created_at': -1 } })
+	if (!lastestSemester)
+		return
+
         const contributions = await Contribution.find({ semesterId: lastestSemester._id })
 
         const zip = new AdmZip()
