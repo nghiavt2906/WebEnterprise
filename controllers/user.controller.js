@@ -28,9 +28,11 @@ const postUser = async (req, res) => {
         'gender',
         'address',
         'phoneNumber',
-        'description',
-        'facultyId'
+        'description'
     ])
+
+    if (req.body.facultyId)
+    	profileData.facultyId = req.body.facultyId
 
     let user = User(userData)
     let profile = Profile(profileData)
