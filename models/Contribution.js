@@ -60,6 +60,10 @@ const ContributionSchema = new Schema({
         required: true,
         ref: 'user'
     },
+    semesterId: {
+        type: Schema.ObjectId,
+        required: true
+    },
     contributionFeedbacks: [ContributionFeedbackSchema],
     contributionComments: [ContributionCommentSchema]
 }, { timestamps: true })

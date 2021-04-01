@@ -6,5 +6,6 @@ const router = express.Router()
 router.get('/', controller.getSemesters)
 router.post('/edit', controller.postEditSemseter)
 router.post('/', controller.postSemester)
+router.post('/delete', controller.postDeleteSemester)
 
 module.exports = router

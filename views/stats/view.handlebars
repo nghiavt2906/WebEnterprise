@@ -1,0 +1,94 @@
+<div class="pcoded-content">
+                        <!-- Page-header start -->
+                        <div class="page-header">
+                            <div class="page-block">
+                                <div class="row align-items-center">
+                                    <div class="col-md-8">
+                                        <div class="page-header-title">
+                                            <h5 class="m-b-10">Statistics</h5>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <ul class="breadcrumb-title">
+                                            <li class="breadcrumb-item">
+                                                <a href="index.html"> <i class="fa fa-home"></i> </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Page-header end -->
+                        <div class="pcoded-inner-content">
+                            <!-- Main-body start -->
+                            <div class="main-body">
+                                <div class="page-wrapper">
+                                    <div class="page-body">
+                                        <div class="row">
+                                            <!-- Bar Chart start -->
+                                            <div class="col-lg-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>Number of contributions by each faculty in {{ semester.name }}</h5>
+                                                        <span></span>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div id="morris-bar-chart"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Bar Chart Ends -->
+                                          
+                                          
+                                            <!-- Donut chart start -->
+                                            <div class="col-xl-8 col-md-12">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h5>Percentage of contributions within each faculty in {{ semester.name }}</h5>
+                                                        <span></span>
+                                                    </div>
+                                                    <div class="card-block">
+                                                        <div id="donut-example"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Donut chart Ends -->
+                                            <!--  chart start -->
+                                            <div class="col-xl-4 col-md-12">
+                                                <div class="card" style="height:14rem;">                                                    
+                                                    <div class="card-block">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-7">
+                                                                <h6 class="text-muted m-b-0" style="color: red !important; font-size: 2rem; font-weight: bold">Contributions without a comment</h6>
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <p class="text-muted m-b-0" id="num1" style="font-size: 2.5rem; color: blue !important ; font-weight: bold"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card" style="height:13.7rem;">                                                    
+                                                    <div class="card-block">
+                                                        <div class="row align-items-center">
+                                                            <div class="col-7">
+                                                                <h6 class="text-muted m-b-0" style="color: red !important; font-size: 2rem; font-weight: bold">Contributions without a comment after 14 days</h6>
+                                                            </div>
+                                                            <div class="col-5">
+                                                                <p class="text-muted m-b-0" id="num2" style="font-size: 2.5rem; color: blue !important ; font-weight: bold"></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <!--  chart Ends -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="styleSelector">
+
+                            </div>
+                        </div>
+                    </div>

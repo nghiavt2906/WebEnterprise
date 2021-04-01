@@ -2,8 +2,9 @@ const _ = require('lodash')
 
 const Faculty = require('../models/Faculty')
 
-const getFaculty = (req, res) => {
-
+const getFaculty = async (req, res) => {
+    let faculties = await Faculty.find()
+    res.render('faculty/view', { faculties, active: { faculty: true } })
 }
 
 const postFaculty = async (req, res) => {
@@ -39,7 +40,23 @@ const postFaculty = async (req, res) => {
     res.redirect('/faculty')
 }
 
+const postDeleteFaculty = async (req, res) => {
+    await Faculty.findByIdAndDelete(req.body.id)
+
+    req.flash('success_msg', 'deleted faculty successfully!')
+    res.redirect('/faculty')
+}
+
+const postEditFaculty = async (req, res) => {
+    await Faculty.findByIdAndUpdate(req.body.id, req.body)
+
+    req.flash('success_msg', 'edited faculty successfully!')
+    res.redirect('/faculty')
+}
+
 module.exports = {
     getFaculty,
-    postFaculty
+    postFaculty,
+    postDeleteFaculty,
+    postEditFaculty
 }

@@ -8,7 +8,7 @@ const getHome = async (req, res) => {
     let faculties = await Faculty.find({})
     res.render('home', {
         faculties,
-        active: { dashboard: true }
+        active: { home: true }
     })
 }
 

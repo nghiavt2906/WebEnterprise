@@ -24,4 +24,6 @@ router.get('/process/:id', controller.getProcessContribution)
 router.post('/process/', controller.postProcessContribution)
 router.post('/process/feedback', controller.postProcessFeedbackContribution)
 
+router.get('/management', controller.getContributionManagement)
+
 module.exports = router

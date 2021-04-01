@@ -28,6 +28,7 @@ const profileRouter = require(path.join(__dirname, 'routes/profile'))
 const facultyRouter = require(path.join(__dirname, 'routes/faculty'))
 const userRouter = require(path.join(__dirname, 'routes/user'))
 const semesterRouter = require(path.join(__dirname, 'routes/semester'))
+const statsRouter = require(path.join(__dirname, 'routes/stats'))
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -65,6 +66,8 @@ app.use((req, res, next) => {
     next()
 })
 
+require('./helpers/zipFiles')()
+
 app.use('/auth', authRouter)
 app.use(checkAuthenticated)
 app.use(withCurrentUser)
@@ -72,11 +75,13 @@ app.use('/', homeRouter)
 app.get('/docs/*.docx', serveMedia)
 app.get('/thumbnails/*.jpg', serveMedia)
 app.get('/avatars/*', serveMedia)
+app.get('/zip/*.zip', serveMedia)
 app.use('/contribution', contributionRouter)
 app.use('/profile', profileRouter)
 app.use('/faculty', facultyRouter)
 app.use('/user', userRouter)
 app.use('/semester', semesterRouter)
+app.use('/stats', statsRouter)
 
 app.listen(port, err => {
     if (err) throw err

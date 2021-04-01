@@ -22,6 +22,16 @@ const getSemesters = async (req, res) => {
 }
 
 const postSemester = async (req, res) => {
+    if (req.body.startDate > req.body.closureDate) {
+        req.flash('error_msg', 'start date should be before closure date!')
+        return res.redirect('/semester')
+    }
+
+    if (req.body.submissionDeadline > req.body.closureDate) {
+        req.flash('error_msg', 'submission deadline should be before closure date!')
+        return res.redirect('/semester')
+    }
+
     try {
         await Semester(req.body).save()
     } catch (err) {
@@ -42,8 +52,16 @@ const postEditSemseter = async (req, res) => {
     res.redirect('/semester')
 }
 
+const postDeleteSemester = async (req, res) => {
+    await Semester.findByIdAndRemove(req.body.id)
+
+    req.flash('success_msg', 'semester deleted successfully!')
+    res.redirect('/semester')
+}
+
 module.exports = {
     getSemesters,
     postSemester,
-    postEditSemseter
+    postEditSemseter,
+    postDeleteSemester
 }

@@ -1,0 +1,50 @@
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+        <!-- Main-body start -->
+        <div class="main-body">
+            <div class="page-wrapper">
+                
+                <!-- Page-body start -->
+                <div class="page-body">
+                    <h2 class="modal-title mb-3" style="margin-top: -1rem;">Contributions by semester</h2>
+    
+                    <!-- Basic table card start -->
+                    <div class="card">
+                       
+                        <div class="card-block table-border-style">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Name</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Number of contributions</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{#each semesters}}
+                                            <tr class="custom-tr">
+                                                <th scope="row">1</th>
+                                                <td>{{ name }}</td>
+                                                <td>{{ responseStartDate }}</td>
+                                                <td>{{ responseClosureDate }}</td>
+                                                <td>{{ numberOfContributions }}</td>
+                                                <td>
+                                                    <button type="submit" class="btn btn-primary" onclick="window.open('/zip/{{ name }}.zip')">Download</button>
+                                                </td>
+                                            </tr>
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                </div>
+                <!-- Page-body end -->
+            </div>
+        </div>
+        <!-- Main-body end -->
+    </div>
+</div>

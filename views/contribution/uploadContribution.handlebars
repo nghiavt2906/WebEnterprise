@@ -5,8 +5,12 @@
         <div class="row align-items-center">
             <div class="col-md-8">
             <div class="page-header-title">
-                <h5 class="m-b-10">{{ semester.name }}</h5>
-                <p class="m-b-0">Start: {{ semester.startDateDisplay }} - End: {{ semester.closureDateDisplay }}</p>
+                {{#if semester}}
+                    <h5 class="m-b-10">{{ semester.name }}</h5>
+                    <p class="m-b-0">Start: {{ semester.startDateDisplay }} - End: {{ semester.closureDateDisplay }}</p>
+                {{else}}
+                    <h5 class="m-b-10">Comming soon...</h5>
+                {{/if}}
             </div>
             </div>
             <div class="col-md-4">
@@ -22,49 +26,97 @@
     </div>
     <br />
 
-    <section class="section">
-        <div class="card" style="margin: 0 3rem;">
-            <div class="card-header custom-card-header">
-                <h4>Submit a new document</h4>
-                <b style="display:inline-block">Submission Deadline</b>: <span class="text-danger" style="display:inline"><b>{{ semester.submissionDeadlineDisplay}}</b></span>
-            </div>
-            <div class="card-body" style="margin: 0 1.5rem;">
-                <form action="/contribution" method="post" enctype="multipart/form-data">
-                    <div class="form-group mb-3" style="margin-top: 20px">
-                        <input type="text" name="title" class="form-control" id="title" placeholder="Title" required/>
-                    </div>
-                    <div class="input-group mb-3" style="margin-top: 20px">
-                        <input type="file" name="file" class="form-control" id="upload" required/>
-                        <input type="submit" id="submit" style="visibility: hidden;position: absolute">
-                    </div>
-                    <input type="hidden" id="content" name="content" required>
-                </form>
-                <label for="editor"><b>Content:</b></label>
-                <!-- Create the toolbar container -->
-                <div id="toolbar" style="background-color: #f5f5f5; border-radius: 10px 10px 0 0;">
-                    <button class="ql-bold">Bold</button>
-                    <button class="ql-italic">Italic</button>
-                    <button class="ql-underline">Underline</button>
-                    <button class="ql-list" value="bullet"></button>
-                    <button class="ql-indent" value="+1"></button>
-                    <button class="ql-indent" value="-1"></button>
-                    <button class="ql-align" value="center"></button>
-                    <button class="ql-align" value="right"></button>
-                    <button class="ql-align" value="justify"></button>
-                    <button class="ql-image">Image</button>               
+    {{#if semester}}
+        <section class="section">
+            <div class="card" style="margin: 0 3rem;">
+                <div class="card-header custom-card-header">
+                    <h4>Submit a new document</h4>
+                    <b style="display:inline-block">Submission Deadline</b>: <span class="text-danger" style="display:inline"><b>{{ semester.submissionDeadlineDisplay}}</b></span>
                 </div>
-                <!-- Create the editor container -->
-                <div id="editor" style="border-radius: 0 0 10px 10px; height: 200px;"></div>
-                <div class="form-check container" style="padding: 0.6rem 0">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="margin:0">
-                    <label class="form-check-label" for="flexCheckDefault" style="padding-left:0.5rem">
-                        <span>I've read and accept the <a class="required-field" href="#" style="color:#448aff">terms & conditions</a></span>
-                    </label>
+                <div class="card-body" style="margin: 0 1.5rem;">
+                    <form action="/contribution" method="post" enctype="multipart/form-data">
+                        <div class="form-group mb-3" style="margin-top: 20px">
+                            <input type="text" name="title" class="form-control" id="title" placeholder="Title" required/>
+                        </div>
+                        <div class="input-group mb-3" style="margin-top: 20px">
+                            <input type="file" name="file" class="form-control" id="upload" required/>
+                            <input type="submit" id="submit" style="visibility: hidden;position: absolute">
+                        </div>
+                        <input type="hidden" id="content" name="content" required>
+                    </form>
+                    <label for="editor"><b>Content:</b></label>
+                    <!-- Create the toolbar container -->
+                    <div id="toolbar" style="background-color: #f5f5f5; border-radius: 10px 10px 0 0;">
+                        <button class="ql-bold">Bold</button>
+                        <button class="ql-italic">Italic</button>
+                        <button class="ql-underline">Underline</button>
+                        <button class="ql-list" value="bullet"></button>
+                        <button class="ql-indent" value="+1"></button>
+                        <button class="ql-indent" value="-1"></button>
+                        <button class="ql-align" value="center"></button>
+                        <button class="ql-align" value="right"></button>
+                        <button class="ql-align" value="justify"></button>
+                        <button class="ql-image">Image</button>               
+                    </div>
+                    <!-- Create the editor container -->
+                    <div id="editor" style="border-radius: 0 0 10px 10px; height: 200px;"></div>
+                    <div class="form-check container" style="padding: 0.6rem 0">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="margin:0">
+                        <label class="form-check-label" for="flexCheckDefault" style="padding-left:0.5rem">
+                            <span>I've read and accept the <a class="required-field" href="#" style="color:#448aff">terms & conditions</a></span>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary mt-2" id="submit-btn" type="submit">Submit</button>
                 </div>
-                <button class="btn btn-primary mt-2" id="submit-btn" type="submit">Submit</button>
             </div>
-        </div>
-    </section> 
+        </section> 
+    {{else}}
+        <section class="section" style="filter: blur(3px);pointer-events:none;">
+            <div class="card" style="margin: 0 3rem;">
+                <div class="card-header custom-card-header">
+                    <h4>Submit a new document</h4>
+                    <b style="display:inline-block">Submission Deadline</b>: <span class="text-danger" style="display:inline"><b>{{ semester.submissionDeadlineDisplay}}</b></span>
+                </div>
+                <div class="card-body" style="margin: 0 1.5rem;">
+                    <form action="/contribution" method="post" enctype="multipart/form-data">
+                        <div class="form-group mb-3" style="margin-top: 20px">
+                            <input type="text" name="title" class="form-control" id="title" placeholder="Title" required/>
+                        </div>
+                        <div class="input-group mb-3" style="margin-top: 20px">
+                            <input type="file" name="file" class="form-control" id="upload" required/>
+                            <input type="submit" id="submit" style="visibility: hidden;position: absolute">
+                        </div>
+                        <input type="hidden" id="content" name="content" required>
+                    </form>
+                    <label for="editor"><b>Content:</b></label>
+                    <!-- Create the toolbar container -->
+                    <div id="toolbar" style="background-color: #f5f5f5; border-radius: 10px 10px 0 0;">
+                        <button class="ql-bold">Bold</button>
+                        <button class="ql-italic">Italic</button>
+                        <button class="ql-underline">Underline</button>
+                        <button class="ql-list" value="bullet"></button>
+                        <button class="ql-indent" value="+1"></button>
+                        <button class="ql-indent" value="-1"></button>
+                        <button class="ql-align" value="center"></button>
+                        <button class="ql-align" value="right"></button>
+                        <button class="ql-align" value="justify"></button>
+                        <button class="ql-image">Image</button>               
+                    </div>
+                    <!-- Create the editor container -->
+                    <div id="editor" style="border-radius: 0 0 10px 10px; height: 200px;"></div>
+                    <div class="form-check container" style="padding: 0.6rem 0">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="margin:0">
+                        <label class="form-check-label" for="flexCheckDefault" style="padding-left:0.5rem">
+                            <span>I've read and accept the <a class="required-field" href="#" style="color:#448aff">terms & conditions</a></span>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary mt-2" id="submit-btn" type="submit">Submit</button>
+                </div>
+            </div>
+        </section> 
+        
+        <img src="" alt="" style="background-image: url('assets/images/blurUpload.jpg')">
+    {{/if}}
 
     <section class="section mt-4">
         <div class="card" style="margin: 0 3rem;">

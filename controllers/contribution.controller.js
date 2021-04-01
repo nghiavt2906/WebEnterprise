@@ -74,7 +74,8 @@ const getContributions = async (req, res) => {
         isPreviousEnabled,
         isNextEnabled,
         previousPageNum,
-        nextPageNum
+        nextPageNum,
+        active: { home: req.user.role === 'student' || req.user.role === 'guest' ? true : false }
     })
 }
 
@@ -196,7 +197,8 @@ const getContributionById = async (req, res) => {
 
     res.render('contribution/details', {
         contribution,
-        recommendContributions
+        recommendContributions,
+        isNotCurrentUser: req.user._id.toString() !== contribution.userId._id.toString()
     })
 }
 
@@ -206,10 +208,28 @@ const getUploadContribution = async (req, res) => {
     if (!currentPage)
         currentPage = 1
 
-    let contributions = await Contribution
-        .find({ userId: req.user._id })
+    let currentDate = new Date()
+    let semester = await Semester.findOne({
+        $and: [
+            {
+                startDate: {
+                    $lte: currentDate
+                },
+            },
+            {
+                closureDate: {
+                    $gte: currentDate
+                }
+            }
+        ]
+    })
+
+
+    let contributions = semester ? await Contribution
+        .find({ userId: req.user._id, semesterId: semester._id })
         .skip((perPage * currentPage) - perPage)
         .limit(perPage)
+        : []
 
     for (const contribution of contributions) {
         switch (contribution.status) {
@@ -232,7 +252,7 @@ const getUploadContribution = async (req, res) => {
     }
 
 
-    let count = await Contribution.countDocuments({ userId: req.user._id })
+    let count = semester ? await Contribution.countDocuments({ userId: req.user._id, semesterId: semester._id }) : 0
 
     let numOfPages = Math.ceil(count / perPage)
 
@@ -252,26 +272,11 @@ const getUploadContribution = async (req, res) => {
 
     let numList = _.range(1, numOfPages + 1).map(x => ({ number: x, isActive: currentPage === x ? true : false }))
 
-    let currentDate = new Date()
-
-    let semester = await Semester.findOne({
-        $and: [
-            {
-                startDate: {
-                    $lte: currentDate
-                },
-            },
-            {
-                closureDate: {
-                    $gt: currentDate
-                }
-            }
-        ]
-    })
-
-    semester.startDateDisplay = semester.startDate.toLocaleDateString('en-GB')
-    semester.closureDateDisplay = semester.closureDate.toLocaleDateString('en-GB')
-    semester.submissionDeadlineDisplay = semester.submissionDeadline.toLocaleDateString('en-GB')
+    if (semester) {
+        semester.startDateDisplay = semester.startDate.toLocaleDateString('en-GB')
+        semester.closureDateDisplay = semester.closureDate.toLocaleDateString('en-GB')
+        semester.submissionDeadlineDisplay = semester.submissionDeadline.toLocaleDateString('en-GB')
+    }
 
     res.render('contribution/uploadContribution', {
         active: { uploadDocument: true },
@@ -293,11 +298,14 @@ const getPendingContributions = async (req, res) => {
     if (!currentPage)
         currentPage = 1
 
+    let user = req.user
+    await user.populate('profileId').execPopulate()
+
     let contributions = await Contribution
-        .find({ status: 'pending' })
+        .find({ status: 'pending', facultyId: user.profileId.facultyId })
         .skip((perPage * currentPage) - perPage)
         .limit(perPage)
-    let count = await Contribution.countDocuments({ status: 'pending' })
+    let count = await Contribution.countDocuments({ status: 'pending', facultyId: user.profileId.facultyId })
 
     let numOfPages = Math.ceil(count / perPage)
 
@@ -351,10 +359,39 @@ const getProcessContribution = async (req, res) => {
     })
 }
 
+const getContributionManagement = async (req, res) => {
+    let semesters = await Semester.find()
+
+
+    for (const semester of semesters) {
+        semester.responseStartDate = new Date(semester.startDate).toLocaleDateString('en-GB')
+        semester.responseClosureDate = new Date(semester.closureDate).toLocaleDateString('en-GB')
+        semester.numberOfContributions = await Contribution.countDocuments({ semesterId: semester._id, status: 'approve' })
+    }
+
+    res.render('contribution/viewContributionsManagement', { semesters, active: { contributionsManagement: true } })
+}
+
 const postContribution = async (req, res) => {
     let profile = await Profile.findById(req.user.profileId)
     let arr = req.file.originalname.split('.')
     arr.pop()
+
+    let currentDate = new Date()
+    let semester = await Semester.findOne({
+        $and: [
+            {
+                startDate: {
+                    $lte: currentDate
+                },
+            },
+            {
+                closureDate: {
+                    $gte: currentDate
+                }
+            }
+        ]
+    })
 
     let data = {
         title: req.body.title,
@@ -363,6 +400,7 @@ const postContribution = async (req, res) => {
         thumbnailFileName: `${req.file.filename.split('.')[0]}.jpg`,
         userId: req.user._id,
         facultyId: profile.facultyId,
+        semesterId: semester._id,
         originalFileName: req.file.originalname
     }
 
@@ -403,18 +441,22 @@ const postContribution = async (req, res) => {
     for (const coordinator of coordinators) {
         await coordinator.populate('profileId').execPopulate()
 
-        if (coordinator.profileId.facultyId.toString() == user.profileId.facultyId.toString())
+        if (coordinator.profileId.facultyId.toString() == user.profileId.facultyId.toString()) {
             email = coordinator.email
+            break
+        }
     }
 
-    let mailOptions = {
-        to: email,
-        from: 'journal@gmail.com',
-        subject: 'New uploaded contribution',
-        html: body
-    }
+    if (email) {
+        let mailOptions = {
+            to: email,
+            from: 'journal@gmail.com',
+            subject: 'New uploaded contribution',
+            html: body
+        }
 
-    await smtpTransport.sendMail(mailOptions);
+        await smtpTransport.sendMail(mailOptions);
+    }
 
     req.flash('success_msg', 'contribution posted successfully!')
     res.redirect('/contribution/upload')
@@ -464,6 +506,33 @@ const postProcessFeedbackContribution = async (req, res) => {
         userId
     })
 
+    if (req.user.role === 'marketing coordinator') {
+        let student = await User.findById(contribution.userId)
+        let smtpTransport = nodemailer.createTransport({
+            host: 'smtp.gmail.com',
+            port: 465,
+            secure: true,
+            auth: {
+                user: 'nghiademo312@gmail.com',
+                pass: 'BxFU*8hNULYq#=YW'
+            }
+        })
+
+        let body = '<p>Your coordinator has given a new feedback</p>' +
+            `<b>Link:</b> ${process.env.DOMAIN}/contribution/process/${contribution._id}`
+
+        let email = student.email
+
+        let mailOptions = {
+            to: email,
+            from: 'journal@gmail.com',
+            subject: 'New feedback from coordinator',
+            html: body
+        }
+
+        await smtpTransport.sendMail(mailOptions);
+    }
+
     await contribution.save()
 
     req.flash('success_msg', 'sent feedback successfully!')
@@ -494,6 +563,7 @@ module.exports = {
     getPendingContributions,
     getProcessContribution,
     getUploadContribution,
+    getContributionManagement,
     postContribution,
     postDeleteContribution,
     postProcessContribution,

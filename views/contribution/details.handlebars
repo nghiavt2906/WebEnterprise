@@ -24,6 +24,53 @@
   <div class="container">
     <h3>{{ contribution.title }}</h3>
 
+    <!-- Page-header end -->
+  <section class="section">
+        <div class="card" style="margin: 0 3rem;">
+            <div class="card-header custom-card-header">
+                <h4>{{ contribution.title }}</h4>
+                <i class="ti-calendar mr-1"></i> Saturday, March 2nd 2021
+                <i class="ti-eye ml-2 mr-1"></i> 1,309
+            </div>
+            <div class="card-body" style="margin: 0 1.5rem;">
+                <div id="body-header" style="display: flex; align-direction: row; margin-bottom: 1rem; justify-content: space-between">
+                    <div class="right-body-header" style="display: flex; align-direction: row;">
+                        {{#if contribution.userId.avatarUrl}}
+                          <img
+                            src="/avatars/{{contribution.userId.avatarUrl}}"
+                            style="width:3rem;height:auto;border: #448aff solid 3px" 
+                            class="img-radius" 
+                            alt="User-Profile-Image"
+                          />
+                        {{else}}
+                          <img
+                            src="/assets/images/avatar-4.jpg"
+                            style="width:3rem;height:auto;border: #448aff solid 3px" 
+                            class="img-radius" 
+                            alt="User-Profile-Image"
+                          />
+                        {{/if}}
+                        <div class="user-info ml-3">
+                            <a href="#" style="font-size: 1rem;"><b>{{ contribution.userId.username }}</b></a> 
+                            <br>
+                            <span>782 followers</span>
+                        </div>
+                        {{#if isNotCurrentUser}}
+                          <div class="btn btn-primary ml-2" style="display:flex;justify-content:center;align-items:center"><span>+ Follow</span></div>
+                        {{/if}}
+                    </div>
+                    <a href="#">
+                        <i class="ti-bookmark" style="font-size: 2rem;"></i>
+                    </a>
+                </div>
+                <hr>
+                <div id="content">
+                    {{{ contribution.content }}}
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="row mt-3">
       <div class="col-md-4 mt-3" id="recommendContributions">
         <div class="card">
