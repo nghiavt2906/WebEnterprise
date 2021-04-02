@@ -59,7 +59,8 @@
             <div class="col-sm-12">
                 <form class="md-float-material form-material" action='/auth/signUp' method="post">
                     <div class="text-center">
-                        <img src="/assets/images/logo.png" alt="logo.png">
+                        <img src="/assets/images/lgsi.jpg" alt="logo.png" style="width:16rem;height:auto; class="
+                            img-radius">
                     </div>
                     <div class="auth-box card">
                         <div class="card-block">
@@ -95,10 +96,10 @@
                                 </div>
                             </div>
                             <div class="form-group form-primary">
-                                <select class="form-control" name="facultyId" required>
+                                <select class="form-control" name="faculty" required>
                                     <option value="">choose your faculty</option>
                                     {{#each faculties}}
-                                        <option value={{ _id }}>{{ name }}</option>
+                                        <option value={{ name }}>{{ name }}</option>
                                     {{/each}}
                                 </select>
                             </div>
@@ -153,7 +154,7 @@
                                     </p>
                                 </div>
                                 <div class="col-md-2">
-                                    <img src="/assets/images/auth/Logo-small-bottom.png" alt="small-logo.png">
+                                    <img src="/assets/images/auth/logo1.png" alt="small-logo.png">
                                 </div>
                             </div>
                         </div>
