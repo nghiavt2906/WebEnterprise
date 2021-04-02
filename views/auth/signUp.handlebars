@@ -95,10 +95,10 @@
                                 </div>
                             </div>
                             <div class="form-group form-primary">
-                                <select class="form-control" name="faculty" required>
+                                <select class="form-control" name="facultyId" required>
                                     <option value="">choose your faculty</option>
                                     {{#each faculties}}
-                                        <option value={{ name }}>{{ name }}</option>
+                                        <option value={{ _id }}>{{ name }}</option>
                                     {{/each}}
                                 </select>
                             </div>

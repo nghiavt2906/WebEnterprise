@@ -136,7 +136,7 @@
                                     <tbody>
                                         {{#each users}}
                                             <tr class="custom-tr" onclick="window.location='/profile/{{ _id }}';">
-                                                <th scope="row">1</th>
+                                                <th scope="row">{{ idx }}</th>
                                                 <td>{{ profileId.firstName }}</td>
                                                 <td>{{ profileId.lastName }}</td>
                                                 <td>{{ username }}</td>
