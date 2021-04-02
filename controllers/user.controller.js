@@ -19,6 +19,8 @@ const getUsers = async (req, res) => {
         user.idx = ++idx
     }
 
+    users = users.filter(x => x.role !== 'admin')
+
     res.render('user/viewUsers', { faculties, users, active: { accounts: true } })
 }
 
