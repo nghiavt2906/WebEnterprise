@@ -1,7 +1,7 @@
 const Faculty = require('../models/Faculty')
 
 const getHome = async (req, res) => {
-    if (req.user.role === 'student' || req.user.role === 'guest') {
+    if (req.user.role === 'student' || req.user.role === 'guest' || req.user.role === 'marketing coordinator') {
         return res.redirect('/contribution')
     }
 

@@ -24,8 +24,12 @@ const zipFiles = () => {
             return
 
         const lastestSemester = await Semester.findOne({}, {}, { sort: { 'created_at': -1 } })
-	if (!lastestSemester)
-		return
+        if (!lastestSemester)
+            return
+
+        if (!fs.existsSync(__dirname + '\\..\\media\\zip')) {
+            fs.mkdirSync(__dirname + '\\..\\media\\zip');
+        }
 
         const contributions = await Contribution.find({ semesterId: lastestSemester._id })
 
