@@ -4,6 +4,10 @@ const https = require('https')
 const path = require('path')
 
 const getThumbnail = async (filename) => {
+    if (!fs.existsSync(__dirname + '\\..\\media\\thumbnails')) {
+        fs.mkdirSync(__dirname + '\\..\\media\\thumbnails');
+    }
+
     const cloudConvert = new CloudConvert(process.env.CLOUD_CONVERT_API_KEY);
 
     let job = await cloudConvert.jobs.create({
