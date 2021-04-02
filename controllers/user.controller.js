@@ -12,9 +12,11 @@ const getUsers = async (req, res) => {
 
     let faculties = await Faculty.find()
 
+    let idx = 0
     for (const user of users) {
         await user.populate('profileId').execPopulate()
         await user.profileId.populate('facultyId').execPopulate()
+        user.idx = ++idx
     }
 
     res.render('user/viewUsers', { faculties, users, active: { accounts: true } })
@@ -32,7 +34,7 @@ const postUser = async (req, res) => {
     ])
 
     if (req.body.facultyId)
-    	profileData.facultyId = req.body.facultyId
+        profileData.facultyId = req.body.facultyId
 
     let user = User(userData)
     let profile = Profile(profileData)

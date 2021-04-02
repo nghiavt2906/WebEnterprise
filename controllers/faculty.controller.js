@@ -4,6 +4,10 @@ const Faculty = require('../models/Faculty')
 
 const getFaculty = async (req, res) => {
     let faculties = await Faculty.find()
+    let idx = 0
+    for (const faculty of faculties) {
+        faculty.idx = ++idx
+    }
     res.render('faculty/view', { faculties, active: { faculty: true } })
 }
 

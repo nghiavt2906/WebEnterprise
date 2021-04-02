@@ -3,7 +3,9 @@ const Semester = require('../models/Semester')
 const getSemesters = async (req, res) => {
     let semesters = await Semester.find()
 
+    let idx = 0
     for (const semester of semesters) {
+        semester.idx = ++idx
         semester.responseStartDate = new Date(semester.startDate).toLocaleDateString('en-GB')
         semester.responseClosureDate = new Date(semester.closureDate).toLocaleDateString('en-GB')
         semester.responseSubmissionDeadline = new Date(semester.submissionDeadline).toLocaleDateString('en-GB')
