@@ -1,6 +1,7 @@
 const Semester = require('../models/Semester')
 const Contribution = require('../models/Contribution')
 const AdmZip = require('adm-zip')
+const fs = require('fs')
 
 const zipFiles = () => {
     setInterval(async () => {
