@@ -25,7 +25,7 @@ const getContributions = async (req, res) => {
     let user = req.user
     let contributions
     let count
-    if (user.role === 'student' || user.role === 'guest') {
+    if (user.role === 'student' || user.role === 'guest' || user.role === 'marketing coordinator') {
         await user.populate('profileId').execPopulate()
 
         contributions = await Contribution
