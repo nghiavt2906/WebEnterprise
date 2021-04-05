@@ -30,34 +30,23 @@
             <!-- task, page, download counter  start -->
             {{#if faculties}}
               {{#each faculties}}
-                <div class="col-xl-4 col-md-6">
-                  <div><div class="card shadow p-3 mb-5 bg-white rounded">
-                    <div class="card-block">
-                      <div class="row align-items-center">
-                        <div class="col-12" style="text-align: center">
-                          <img
-                            src="./assets/images/3.png"
-                            alt=""
-                            style="width: 14rem"
-                          />
-                        </div>
-                      </div>
+                <div class="col-lg-4 col-md-6">  
+                  <div class="card" style="-webkit-box-shadow: 0px -1px 14px 2px rgba(0,0,0,0.17);
+                                            -moz-box-shadow: 0px -1px 14px 2px rgba(0,0,0,0.17);
+                                            box-shadow: 0px -1px 14px 2px rgba(0,0,0,0.17);;">
+                    <div class="row align-items-center" 
+                      style="height: 200px; margin:0 ;width:auto;background: url('/assets/images/3.svg') no-repeat center;background-size: cover">
                     </div>
-                    <div class="card-footer text-muted bg-primary" style="border-radius: 5px;">
-                      <div
-                        class="text-white"
-                        style="text-align: center; font-size: 1rem;"
-                      >
-                        <div class="text-white" style="text-align: center;">
-                          <a
+                    <div class="card-body">
+                      <div style="text-align: center;">
+                        <a
                             href="/contribution?id={{_id}}"
-                            style="color: white; font-size: 1rem"
-                            >{{ name }}</a
-                          >
-                        </div>
+                            style="color: #5F717A; font-size: 1.5rem; font-weight: bold">{{ name }}
+                            </a>
                       </div>
+                      
                     </div>
-                  </div></div>
+                  </div>
                 </div>
               {{/each}}
             {{else}}
