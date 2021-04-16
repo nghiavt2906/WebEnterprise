@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@handlebars/allow-prototype-access": "^1.0.3",
+    "dotenv": "^8.2.0",
     "adm-zip": "^0.5.5",
     "bcrypt": "^5.0.1",
     "cloudconvert": "^2.1.8",
@@ -31,7 +32,6 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
     "nodemon": "^2.0.7"
   }
 }
