@@ -117,7 +117,7 @@ b, strong {
 .card {
   border-radius: 5px;
   -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
-          box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
+  box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
   border: none;
   margin-bottom: 30px;
   -webkit-transition: all 0.3s ease-in-out;
@@ -6554,6 +6554,30 @@ table tbody .border-bottom-info td {
   @media only screen and (max-width: 767px) {
     .main-menu .main-menu-header {
       padding: 31px 0;
+    }
+  }
+
+  @media only screen and (max-width: 375px) {
+    div#review.tab-pane {
+      padding: 0 1.7rem !important;
+      margin-top: -4rem;
+    }
+  }
+
+  /* @media only screen and (max-width: 375px) { */
+  @media only screen and (max-width: 993px) {
+    div.navbar-logo a img.img-fluid {
+      width: 160px;
+      height: 100px;
+      margin-top: -0.5rem !important;  
+    }
+  }
+
+  @media only screen and (max-width: 767px) {
+    div.navbar-logo a img.img-fluid {
+      width: 160px;
+      height: 100px;
+      margin-top: -2.5rem !important;  
     }
   }
 

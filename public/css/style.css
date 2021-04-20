@@ -31,7 +31,6 @@
 }
 
 footer {
-  margin-top: 10rem;
   padding: 2rem 0rem;
   background-color: #f9fafb;
 }
@@ -54,4 +53,6 @@ footer {
   justify-content:center !important;
 }
 
-
+#content p img {
+  width: 100%;
+}
